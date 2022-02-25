@@ -86,7 +86,7 @@
 
         <label for="district" class="text-white">District</label>
         <select  id="district" class="form-control mb-3" v-model="form.state">
-          <option value>Kerala</option>
+            <option class="" v-for=" district in  districts" :key="district.id" :value="district.id">{{district.district_name}}</option>
         </select>
 
         <label for="state" class="text-white">State</label>
@@ -99,14 +99,18 @@
   </div>
 </template>
 <script>
+import api from '~/lib/js/api'
   export default {
     data() {
       return {
-        form: {}
+        form: {},
+        districts:''
       }
     },
     async fetch(){
-        
+        const itemsList = await api.getDistrict()
+        .then((res) => res.json())
+        this. districts = itemsList
     }
   }
 
