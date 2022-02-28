@@ -35,6 +35,8 @@
         this.donors = await response.json()
       }
 
+      const newI = await fetch('http://localhost:6000/blood-donors/2')
+
     }
   }
 

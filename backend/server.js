@@ -9,6 +9,7 @@ const fastify = require('fastify')({
 })
 
 fastify.register(require('./routes/items'))
+fastify.register(require('./routes/blood-donors'))
 
 const PORT = 6000
 const start = async () => {

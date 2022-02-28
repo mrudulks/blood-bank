@@ -1,4 +1,8 @@
 
-GET http://localhost:6000/items HTTP/1.1
 
-GET http://localhost:6000/items/1 HTTP/1.1
+GET http://localhost:6000/blood-donors HTTP/1.1;
+
+#with Id
+
+GET http://localhost:6000/blood-donors/1 HTTP/1.1
+
