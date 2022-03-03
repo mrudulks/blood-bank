@@ -6,7 +6,7 @@ const knex = require('knex')({
       port : 5432,
       user : 'postgres',
       password : '',
-      database : 'mithram-backend'
+      database : 'blood-bank'
     },
   });
 

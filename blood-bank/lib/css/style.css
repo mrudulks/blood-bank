@@ -4,14 +4,30 @@
   --color3: #6F2232;
   --color4: #950740;
   --color5: #C3073F;
+  --color6:#d70032;
 }
 
 body {
-  background-color: var(--bg-color);
+  
 }
 p{
   margin-bottom: .2rem;
 }
+
+/* Colors */
+.text-red{
+  color: var(--color6) !important;
+}
+.bg-red{
+  background-color: var(--color6);
+}
+.bg-light-grey{
+  background-color: var(--color2);
+}
+.bg-black{
+  background-color: var(--bg-color);
+}
+
 /* blood group */
 .blood__group{
     display: flex;
@@ -26,7 +42,7 @@ p{
   width: 3.125rem;
   height: 3.125rem;
   cursor: pointer;
-  border: 1px solid var(--color5);
+  border: 1px solid var(--color6);
   border-radius: .5rem;
   display: inline-flex;
   justify-content: center;
@@ -37,7 +53,14 @@ p{
   background: transparent;
 }
 .blood__group input:checked+.radiobox {
-    background: linear-gradient(180deg, var(--color5) 0%, #B41512 100%);
+    background: linear-gradient(180deg, var(--color6) 0%, #B41512 100%);
     border-color: transparent;
     color: white;
   }
+  .pro-img{
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+.pro-img img{
+  height: 7rem;
+}

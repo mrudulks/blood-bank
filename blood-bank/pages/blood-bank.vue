@@ -1,9 +1,7 @@
 <template>
-  <div class="container">
-    <header class="p-2">
-      <h3 class="text-center text-white">Search Blood</h3>
-    </header>
-    <section>
+  <div>
+    <b-header></b-header>
+    <section  class="container pt-5">
       <div class="blood__group">
         <input type="radio" name="radio" id="a_positive" class="radio__input" value="1" v-model="form.radio" checked />
         <label for="a_positive" class="radiobox">
@@ -86,12 +84,12 @@
 
         <label for="district" class="text-white">District</label>
         <select  id="district" class="form-control mb-3" v-model="form.district" @change="getLocalBody()">
-            <option class="" v-for=" district in  districts" :key="district.id" :value="district.id" >{{district.district_name}}</option>
+            <option class="" v-for=" district in  districts" :key="district.id" :value="district.id" >{{district.districtname}}</option>
         </select>
 
         <label for="state" class="text-white">Block Panchayaths</label>
-        <select name id="state" class="form-control mb-3" v-model="form.blockPanchayath">
-          <option v-for="items in localbody" :key="items.id" :value="items.id">{{ items.localbody_name }}</option>
+        <select name id="state" class="form-control mb-3 text-uppercase" v-model="form.blockPanchayath">
+          <option v-for="items in localbody" :key="items.id" :value="items.id">{{ items.name }}</option>
         </select>
 
           <div class="col-12 text-center">
@@ -104,13 +102,18 @@
   </div>
 </template>
 <script>
+import BHeader from '~/components/BHeader.vue'
 import api from '~/lib/js/api'
   export default {
+    components:{
+      BHeader,
+    },
     data() {
       return {
         form: {},
         districts:'',
-        localbody:''
+        localbody:'',
+        newD:''
       }
     },
     async fetch(){

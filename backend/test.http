@@ -1,8 +1,7 @@
 
 
-GET http://localhost:6000/blood-donors HTTP/1.1;
-
+GET http://localhost:5000/donors?district=7 HTTP/1.1;
+# 
 #with Id
 
-GET http://localhost:6000/blood-donors/1 HTTP/1.1
-
+# GET http://localhost:5000/districts HTTP/1.1
