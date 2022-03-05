@@ -1,6 +1,6 @@
 
 
-GET http://localhost:5000/donors?district=7 HTTP/1.1;
+GET http://localhost:5000/blockpanchayths HTTP/1.1;
 # 
 #with Id
 

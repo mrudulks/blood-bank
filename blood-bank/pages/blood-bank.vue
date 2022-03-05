@@ -77,11 +77,6 @@
       </div>
 
       <div >
-        <label for="state" class="text-white">State</label>
-        <select id="state" class="form-control mb-3" v-model="form.state">
-          <option value>Kerala</option>
-        </select>
-
         <label for="district" class="text-white">District</label>
         <select  id="district" class="form-control mb-3" v-model="form.district" @change="getLocalBody()">
             <option class="" v-for=" district in  districts" :key="district.id" :value="district.id" >{{district.districtname}}</option>

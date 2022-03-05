@@ -129,6 +129,12 @@ fastify.register(require('./routes/disricts/'));
 fastify.register(require('./routes/blockpanchayaths/index'))
 fastify.register(require('./routes/bloodDonors/index'))
 fastify.register(require('./routes/blood-groups/index'))
+fastify.register(require('./routes/index'))
+fastify.register(require('./routes/user/index'))
+fastify.get('/', function (request, reply) {
+  reply.send({ hello: 'world' })
+})
+
 
 const PORT = 5000
 const start = async () => {

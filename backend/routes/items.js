@@ -1,4 +1,5 @@
 const items = require('../items')
+const {insertTable} = require('../controllers/test')
 //Test page
 //Options for get all items
 const getItemsopts = {
@@ -18,6 +19,27 @@ const getItemsopts = {
     }
 }
 
+const addBlogValidation = {
+    body: {
+        type: 'object',
+        required: [
+            'req.body.name'
+        ],
+        properties: {
+            name: { type: 'string' }
+        }
+    },
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                id: { type: 'string' },
+                name: { type: 'string' }
+            }
+        }
+    }
+}
+
 function itemRoutes(fastify, options, done){
   
 fastify.get('/items',(req,reply)=>{
@@ -32,5 +54,14 @@ fastify.get('/items/:id',(req,reply)=>{
     reply.send(item)
 })
 done()
+fastify.post('/items',addBlogValidation,async (req,reply)=>{
+   return await insertTable()
+    items.push(newitem)
+    reply.send(items)
+})
 }
+
+ 
+
+
 module.exports = itemRoutes

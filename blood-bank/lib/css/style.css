@@ -64,3 +64,11 @@ p{
 .pro-img img{
   height: 7rem;
 }
+
+input,select{
+  border-color: var(--color6) !important;
+}
+
+.register label{
+  font-size: 1.2rem;
+}

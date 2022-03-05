@@ -8,7 +8,6 @@ const {
     }
     else {
       return knex.select('*').from('blood_groups');
-    }
-   
+    } 
  }
  exports.getBloodGroups = getBloodGroups;

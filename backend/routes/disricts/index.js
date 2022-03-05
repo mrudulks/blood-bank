@@ -12,4 +12,4 @@ fastify.get('/districts/:id', async (req,reply)=>{
 
 done()
 }
-module.exports = itemRoutes
+module.exports = itemRoutes;

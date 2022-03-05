@@ -1,0 +1,8 @@
+<template>
+    <div>
+        <form action="">
+            <input type="text" placeholder="username" name="username">
+            <input type="password" placeholder="password" name="password">
+        </form>
+    </div>
+</template>
