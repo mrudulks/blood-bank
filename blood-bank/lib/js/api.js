@@ -15,7 +15,7 @@ function getTaluk(districtId){
 function getDonors(bloodGp,districtId,blockPan){
     if(bloodGp)
     // return fetch(BASE_URL+'/donors?blood_group='+bloodGp)
-    return fetch(BASE_URL+'/donors?blood_group='+bloodGp+'&district='+districtId+'&block_panchayaths='+blockPan)
+    return fetch(BASE_URL+'/donors?bloodgroup='+bloodGp+'&district='+districtId+'&block_panchayaths='+blockPan)
 }
 
 // Blood Groups

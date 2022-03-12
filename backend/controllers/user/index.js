@@ -22,6 +22,14 @@ function userAuth(auth){
     }
 }
 
+function tokenUpdate(id,tokenId){
+  const timeStamp = new Date(Date.now())
+// Returns [ { id: 42, title: "The Hitchhiker's Guide to the Galaxy" } ]
+return knex('users')
+  .where({ id: id })
+  .update({ token:tokenId ,updated_at:timeStamp }, ['id', 'token','updated_at'])
+}
 
+exports.tokenUpdate = tokenUpdate;
 exports.getUsers = getUsers;
 exports.userAuth = userAuth;

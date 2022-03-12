@@ -16,10 +16,10 @@ const {
         }
 
         newArray.push(obj)
-        return knex('blood_donors').where(newArray[0])
+        return knex('donors').where(newArray[0])
      }
      else{
-         return knex.select('*').from('blood_donors');
+         return knex.select('*').from('donors');
      }
  } 
  exports.getDonerById = getDonerById;

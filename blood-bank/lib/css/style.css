@@ -5,10 +5,15 @@
   --color4: #950740;
   --color5: #C3073F;
   --color6:#d70032;
+  --bg2:#061621;
+  --bg3:#18313f;
+  --bg4:#0d222d;
+  --bg5:#d1414f;
+  --bg6:#0c1c27;
 }
 
 body {
-  
+  background-color: var(--bg2);
 }
 p{
   margin-bottom: .2rem;
@@ -27,7 +32,9 @@ p{
 .bg-black{
   background-color: var(--bg-color);
 }
-
+.bg-blueish1{
+  background-color:var(--bg6) ;
+}
 /* blood group */
 .blood__group{
     display: flex;

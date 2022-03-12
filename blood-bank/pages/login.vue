@@ -26,8 +26,12 @@
     data() {
       return {
         form: {},
-        user:[]
+        user:[],
+        items:''
       }
+    },
+    async fetch(){
+     
     },
     methods: {
       async loginUser() {
@@ -39,12 +43,13 @@
           body: '{"email":"'+this.form.username+'","password":"'+this.form.password+'"}'
         };
 
-        const response = await fetch('http://localhost:5000/auth', options)
+        const response = await fetch('http://127.0.0.1:5000/auth', options)
         if(response.status == 200){
             const data = await response.json()
             this.user = data
             if(this.user.length != 0){
-                console.log(data[0].first_name);
+              localStorage.setItem("user",this.user)
+              // console.log(data);
                  this.$router.push({
                 name: 'blood-bank'
               })
@@ -62,6 +67,7 @@
 
 <style>
   .card {
+    background:var(--bg3);
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px; */
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: .5rem;
