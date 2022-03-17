@@ -43,7 +43,7 @@
           body: '{"email":"'+this.form.username+'","password":"'+this.form.password+'"}'
         };
 
-        const response = await fetch('http://127.0.0.1:5000/auth', options)
+        const response = await fetch('/api/user/auth', options)
         if(response.status == 200){
             const data = await response.json()
             this.user = data

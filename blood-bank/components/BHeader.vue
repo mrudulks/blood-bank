@@ -6,9 +6,18 @@
   </header>
 
 </template>
-<script>
+<script setup>
+// const counter = useCookie('counter')
   export default {
-    name: 'Header'
+    name: 'Header',
+    data(){
+      return{
+        cookieRes :''
+      }
+    },
+    
+    // cookie:useCookie('user-session')
   }
+
 
 </script>

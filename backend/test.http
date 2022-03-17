@@ -1,7 +1,0 @@
-
-
-GET http://localhost:5000/blockpanchayths HTTP/1.1;
-# 
-#with Id
-
-# GET http://localhost:5000/districts HTTP/1.1

@@ -115,6 +115,9 @@ import api from '~/lib/js/api'
         const itemsList = await api.getDistrict()
         .then((res) => res.json())
         this. districts = itemsList
+
+        const data = await fetch('/api/')
+       
     },
     methods:{
        async getLocalBody(){

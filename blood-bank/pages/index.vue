@@ -11,7 +11,8 @@ export default {
     }
   },
   async fetch(){
-   
+   const data = await fetch('/api/')
+   this.items = data.json()
   }
 }
 </script>
