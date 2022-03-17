@@ -48,10 +48,11 @@
             const data = await response.json()
             this.user = data
             if(this.user.length != 0){
-              localStorage.setItem("user",this.user)
+              // localStorage.setItem("users", JSON.stringify(users));
+              localStorage.setItem("user",JSON.stringify(this.user))
               // console.log(data);
                  this.$router.push({
-                name: 'blood-bank'
+                name: 'index'
               })
             }
             else{
