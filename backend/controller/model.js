@@ -48,7 +48,9 @@ function getLoggedUsers(session){
 }
 
 
-
+function getUserList(){
+  return  knex('donors').orderBy('id');
+}
 
 //BlockPanchayaths
 
@@ -84,7 +86,9 @@ function getDonerById(id) {
     return knex('donors').count('status');
   }
   else{
-    return knex.select('*').from('donors');
+    // return knex('donors').orderBy('name');
+    return "Hii my boy"
+    
   }
 }
 function getDonerByFilter(filter){
@@ -101,7 +105,8 @@ function getDonerByFilter(filter){
       return knex('donors').where(newArray[0])
    }
    else{
-       return knex.select('*').from('donors');
+      //  return knex.select('*').from('donors');
+      return "Hii there"
    }
 } 
 
@@ -117,7 +122,18 @@ function getBloodGroups(id) {
 }
 
 
-
+async function registerNew(formData){
+  return knex('donors').insert({
+      name:formData.name,
+      phone:formData.phone,
+      bloodgroup:formData.bloodgroup,
+      district:formData.district,
+      block_panchayaths:formData.block_panchayaths,
+      email:formData.email
+  })
+  // const data = await response.json()
+}
+exports.registerNew = registerNew;
 
 
 
@@ -138,3 +154,5 @@ exports.getDonerById = getDonerById;
 exports.getDonerByFilter = getDonerByFilter;
 
 exports.getBloodGroups = getBloodGroups;
+
+exports.getUserList = getUserList;

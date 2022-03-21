@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="pt-5 pb-5 ">
-      <h2 class="text-center">Blood Bank</h2>
+      <h2 class="text-center text-red">Blood Bank</h2>
       <div class="row">
         <div class="col-md-4">
           <div class="card mt-5">
@@ -22,8 +22,9 @@
               <img src="../lib/images/users.svg" alt="">
             </div>
             <div class="pl-3">
-              <h3 v-for="items in donorsCount" :key="items" class="m-0">{{items.count}}</h3>
-              <p>Blood Donors</p>
+              <!-- <h3 v-for="items in donorsCount" :key="items" class="m-0">{{items.count}}</h3> -->
+              <h3 class="m-0">1</h3>
+              <p>State</p>
             </div>
 
           </div>
@@ -35,8 +36,9 @@
               <img src="../lib/images/users.svg" alt="">
             </div>
             <div class="pl-3">
-              <h3 v-for="items in donorsCount" :key="items" class="m-0">{{items.count}}</h3>
-              <p>Blood Donors</p>
+              <!-- <h3 v-for="items in donorsCount" :key="items" class="m-0">{{items.count}}</h3> -->
+              <h3 class="m-0">14</h3>
+              <p>Districts</p>
             </div>
 
           </div>

@@ -112,12 +112,6 @@ module.exports = async function (fastify, opts, done) {
 
     })
 
-    fastify.post('/register', addBlogValidation, async (req, reply) => {
-        return registerNew(req.body)
-    })
-
-
-
 
     done()
 }

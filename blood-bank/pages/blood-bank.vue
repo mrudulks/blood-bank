@@ -96,7 +96,7 @@
       </div>
 
     </section>
-    <section class="pt-5 pb-5">
+    <section class="pt-5 pb-5 d-none">
       <div class="container">
         <h4 class="text-center mb-4">Blood Donors</h4>
         <table class="table">

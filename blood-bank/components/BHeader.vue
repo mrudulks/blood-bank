@@ -1,7 +1,10 @@
 <template>
   <header class="bg-blueish1">
     <nav class="navbar navbar-expand-lg navbar-light   container d-flex justify-content-between text-capitalize">
-      <a class="navbar-brand text-red" href="#">Navbar</a>
+      <div><a class="navbar-brand text-red" href="#">Navbar</a>
+          <nuxt-link to="/">Home</nuxt-link>
+      </div>
+      
       <p class="text-white">{{token[0].first_name}}</p>
     </nav>
   </header>

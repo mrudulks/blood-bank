@@ -111,11 +111,11 @@
             '","block_panchayaths":"' + this.register.blockPanchayath + '","age":"' + this.register.age + '","email":"'+this.register.email+'"}'
         };
 
-        fetch('/api/register', options)
+        fetch('/api/donors/register', options)
           .then(response => {
             if (response.status == 200) {
               this.$router.push({
-                name: 'blood-bank'
+                name: 'index'
               })
             }
           })
