@@ -1,7 +1,7 @@
 const BASE_URL = "/api";
 
 function totalUsers(){
-    
+    return fetch(BASE_URL+'/donors/count')
 }
 
 
@@ -14,6 +14,8 @@ function getDistrict(id){
     }
     
 }
+
+
 function getTaluk(districtId){
     return fetch(BASE_URL+'/blockpanchayaths?district='+districtId)
 }

@@ -109,10 +109,7 @@ module.exports = async function (fastify, opts,done) {
 
 
 
-    fastify.get('/count', async (req, reply) => {
-        return await getUsers("count")
-    })
-
+  
 
 
     done()

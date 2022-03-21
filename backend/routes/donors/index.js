@@ -11,5 +11,11 @@ module.exports = async function (fastify, opts,done){
     fastify.get('/', async (req,reply)=>{
         return await getDonerByFilter(req.query)
     })
+
+    fastify.get('/count', async (req, reply) => {
+        return await getDonerById('count')
+    })
+
+
     done()
     }
