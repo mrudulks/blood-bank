@@ -21,14 +21,6 @@ function genRandomToken() {
   return crypto.randomBytes(18).toString('base64');
 }
 
-function updateSession(sessionId, data){
-  const timeStamp = new Date(Date.now())
-  return knex('session')
-  .where({ token: sessionId })
-  .update({ count:data }, ['token', 'count'])
-}
-
-
 function storeUserSession(id,tokenId){
     console.log("user is is here",id)
     const timeStamp = new Date(Date.now())
@@ -97,12 +89,11 @@ module.exports = async function (fastify, opts,done) {
         console.log(req.headers);
         if(req.headers){
             const cookies = parseCookie(req.headers.cookie);
-            console.log("Your cookies",cookies)
+            // console.log("Your cookies",cookies)
             if(cookies.usersession){
-                debugger;
                 console.log("user cookie",cookies.usersession);
                 let user = await getLoggedUsers(cookies.usersession);
-                console.log(user)
+                // console.log(user)
                 return user
             }
             else{
@@ -118,6 +109,9 @@ module.exports = async function (fastify, opts,done) {
 
 
 
+    fastify.get('/count', async (req, reply) => {
+        return await getUsers("count")
+    })
 
 
 

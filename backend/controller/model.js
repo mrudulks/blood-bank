@@ -15,6 +15,9 @@ function getUsers(id){
   if(id != null){
     return knex('users').where('id',id)
   }
+  else if(id == "count"){
+    knex('users').count('active');
+  }
     else{
         return knex.select('*').from('users');
     }
@@ -77,7 +80,12 @@ function getBlockPanchayathsFilter(filter) {
 // Blood Donors 
 
 function getDonerById(id) {
+  if(id != null){
   return knex('blood_donors').where('id', id)
+  }
+  else{
+    return knex.select('*').from('donors');
+  }
 }
 function getDonerByFilter(filter){
    var obj = {};

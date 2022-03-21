@@ -68,7 +68,6 @@ module.exports = async function (fastify, opts) {
     if (request.headers.cookie) {
       const cookies = parseCookie(request.headers.cookie);
       if (cookies.sessionid) {
-        debugger;
       viewCount = await getSession(cookies.sessionid)
         viewCount++
         
@@ -80,7 +79,7 @@ module.exports = async function (fastify, opts) {
         reply.header('set-cookie', `sessionid=${sessionId}`);
         viewCount = 1
         storeSessionData(sessionId, viewCount)
-        console.log(sessionStore)
+        // console.log(sessionStore)
         return updateSession(sessionId, viewCount)
       }
     } else {
@@ -89,7 +88,7 @@ module.exports = async function (fastify, opts) {
       reply.header('set-cookie', `sessionid=${sessionId}`);
       viewCount = 1
       storeSessionData(sessionId, viewCount)
-      console.log(sessionStore)
+      // console.log(sessionStore)
       return insertSession(sessionId, viewCount)
     }
   })

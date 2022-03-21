@@ -1,5 +1,10 @@
 const BASE_URL = "/api";
 
+function totalUsers(){
+    
+}
+
+
 function getDistrict(id){
     if(id == null){
         return fetch(BASE_URL+'/districts')
@@ -18,18 +23,25 @@ function getDonors(bloodGp,districtId,blockPan){
     return fetch(BASE_URL+'/donors?bloodgroup='+bloodGp+'&district='+districtId+'&block_panchayaths='+blockPan)
 }
 
+
+function getAllDonors(){
+    return fetch(BASE_URL+'/donors')
+}
+
+
 // Blood Groups
 
 function getBloodGroups(id){
     if(id != null){
-        return fetch(BASE_URL+'/bloodgroups/'+id)
+        return fetch(BASE_URL+'/groups/'+id)
     }
-    return fetch(BASE_URL+'/bloodgroups')
+    return fetch(BASE_URL+'/groups')
 }
 
 export default{
     getDistrict,
     getTaluk,
     getDonors,
-    getBloodGroups
+    getBloodGroups,
+    getAllDonors
 }

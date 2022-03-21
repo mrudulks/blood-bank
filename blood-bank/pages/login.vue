@@ -1,17 +1,20 @@
 <template>
   <div>
-    <b-header></b-header>
+    
     <section class="container pt-5">
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6 d-flex justify-center align-center justify-content-center">
           <div class="login-form card p-5 text-center">
-            <h3 class="text-center mb-4">Please Login</h3>
+            <h3 class="text-center mb-4 text-white">Please Login</h3>
             <form action @submit.prevent="loginUser" id="loginForm">
               <input type="text" class="form-control" placeholder="Username or Email" v-model="form.username">
               <input type="password" class="form-control" placeholder="Password" v-model="form.password">
               <div class="col-md-12 text-center">
                 <button class="btn btn-primary  mb-3" type="submit">Login</button>
+              </div>
+              <div class="col-md-12 text-center">
+                <p class="text-white">New User?</p><nuxt-link to="/register" class="">Register</nuxt-link>
               </div>
             </form>
           </div>
@@ -23,6 +26,7 @@
 </template>
 <script>
   export default {
+    layout: 'custom',
     data() {
       return {
         form: {},

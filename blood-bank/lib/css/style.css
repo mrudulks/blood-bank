@@ -13,7 +13,8 @@
 }
 
 body {
-  background-color: var(--bg2);
+  background-color: rgb(243, 244, 246);
+  font-family: 'Roboto', sans-serif;
 }
 p{
   margin-bottom: .2rem;

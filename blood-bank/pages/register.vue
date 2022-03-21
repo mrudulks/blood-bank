@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-header></b-header>
+
     <section class="container pt-5">
       <h2 class="mb-3 mt-5 text-center">Register for Blood Donation</h2>
       <form action @submit.prevent="registerNew" id="registerForm">
@@ -60,6 +60,7 @@
   import BHeader from '~/components/BHeader.vue'
   import api from '~/lib/js/api'
   export default {
+     layout: 'custom',
     components: {
       BHeader,
     },
