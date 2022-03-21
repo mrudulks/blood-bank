@@ -111,7 +111,7 @@
             '","block_panchayaths":"' + this.register.blockPanchayath + '","age":"' + this.register.age + '","email":"'+this.register.email+'"}'
         };
 
-        fetch('http://localhost:5000/register', options)
+        fetch('/api/register', options)
           .then(response => {
             if (response.status == 200) {
               this.$router.push({
