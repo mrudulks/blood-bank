@@ -48,9 +48,14 @@ function getLoggedUsers(session){
 }
 
 
-function getUserList(){
-  return  knex('donors').orderBy('id');
+function getDonorsList(){
+  return   knex.with('with_alias', knex.raw("SELECT * FROM donors left join blood_groups on blood_groups.bid = bloodgroup left join blood_donation on blood_donation.donors_id = donors.id where blood_donation.donated_time < now() - interval '90 day' LIMIT 50")).select('*').from('with_alias')
 }
+
+function getAllDonorsList(){
+  return   knex.with('with_alias', knex.raw("SELECT * FROM donors left join blood_groups on blood_groups.bid = bloodgroup left join blood_donation on blood_donation.donors_id = donors.id LIMIT 50")).select('*').from('with_alias')
+}
+
 
 //BlockPanchayaths
 
@@ -131,10 +136,30 @@ async function registerNew(formData){
       block_panchayaths:formData.block_panchayaths,
       email:formData.email
   })
+
+
+  
   // const data = await response.json()
 }
-exports.registerNew = registerNew;
 
+
+async function updateDonor(formData){
+  const timeStamp = new Date('2021-10-13')
+  var id = 3;
+  // Returns [ { id: 42, title: "The Hitchhiker's Guide to the Galaxy" } ]
+  // return knex('donors')
+  //   .where({ id: id })
+  //   .update({ donated_time:timeStamp }, ['id', 'donated_time'])
+  // }
+  return knex('blood_donation').insert({
+      donors_id:id,
+      donated_time:timeStamp
+  })
+
+}
+
+exports.registerNew = registerNew;
+exports.updateDonor =  updateDonor;
 
 
 
@@ -155,4 +180,5 @@ exports.getDonerByFilter = getDonerByFilter;
 
 exports.getBloodGroups = getBloodGroups;
 
-exports.getUserList = getUserList;
+exports.getDonorsList = getDonorsList;
+exports.getAllDonorsList = getAllDonorsList;

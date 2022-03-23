@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-header></b-header>
+   
     <section class="container pt-5">
       <h2 class="mb-3 mt-5 text-center">Register for Blood Donation</h2>
       <form action @submit.prevent="userRegister()" id="registerForm">
@@ -26,25 +26,36 @@
             <input type="password" id="password" class="form-control" v-model="user.password">
           </div>
 
+          <div class="col-md-6">
+            <label for="password">Password</label>
+            <input type="date" id="password" class="form-control" value="12-05-1999" v-model="user.date">
+          </div>
+
         </div>
         <div class="col-md-12">
           <button class="btn btn-primary  mb-3" type="submit">Login</button>
         </div>
       </form>
     </section>
+
+    <input-date :date="modelValue" ></input-date>
   </div>
 </template>
 <script>
-  import BHeader from '~/components/BHeader.vue'
+ 
   //   import api from '~/lib/js/api'
+  import inputDate from '~/components/inputFields/inputDate.vue'
   export default {
-    components: {
-      BHeader,
-    },
+     layout: 'custom',
+     components:{
+       inputDate,
+     },
+
     data() {
       return {
         user: {},
-        userResponse: ''
+        userResponse: '',
+        modelValue:''
       }
     },
     methods: {

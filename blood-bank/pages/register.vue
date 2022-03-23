@@ -3,7 +3,7 @@
 
     <section class="container pt-5">
       <h2 class="mb-3 mt-5 text-center">Register for Blood Donation</h2>
-      <form action @submit.prevent="registerNew" id="registerForm">
+      <form action @submit.prevent="registerNew" id="registerForm" class="card">
         <div class="row register">
           <div class="col-md-6">
             <label for="name">Name</label>
@@ -131,6 +131,7 @@
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px; */
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: .5rem;
+    padding: 1.5rem;
   }
 
   .register input,

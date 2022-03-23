@@ -62,19 +62,25 @@
                 <tr>
                   <!-- <th scope="col">#</th> -->
                   <th scope="col">Name</th>
-                  <th scopr="col">Blood Group</th>
+                  <th scope="col">Blood Group</th>
+                  <th scope="col">Last Donated</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <!-- ----- -->
-                <tr v-for="items in donors" :key="items.id">
+                <tr v-for="items in donors" :key="items.name">
                   <td>{{ items.name }}</td>
                   <td>{{ items.bloodIcon }}</td>
+                  <td>
+                    <!-- <input v-if="isEdit" type="date" v-model="items.lastDonated" /> -->
+                    <div >{{ items.lastDonated }}</div>
+                    </td>
                   <td>{{ items.phone }}</td>
                   <td v-if="items.status == 'Active'"><span class="active">Active</span></td>
-                  <td v-else><span class="inactive">Inactive</span></td>
+                  <td v-else ><span class="inactive">Inactive</span></td>
                 </tr>
                 <!-- ----- -->
               </tbody>
@@ -93,14 +99,15 @@
 
 <script>
   import api from '~/lib/js/api';
-  import {donorsList} from '~/lib/js/model';
+  import {donorsList} from '~/lib/js/model'
   export default {
     name: 'IndexPage',
     data() {
       return {
         items: '',
         donorsCount: '',
-        donors: ''
+        donors: '',
+        isEdit:false,
       }
     },
     async fetch() {
@@ -110,9 +117,15 @@
       const count = await fetch('/api/donors/count')
       this.donorsCount = await count.json();
 
-      const bloodDonors = await fetch('/api/donors')
+      const bloodDonors = await fetch('/api/donors/all')
       const jsonDate = await bloodDonors.json()
-      this.donors = donorsList.fromArray(jsonDate)
+    this.donors = donorsList.fromArray(jsonDate)
+
+    },
+    methods:{
+      updateInput(e){
+        this.isEdit = false;
+      }
     }
   }
 
