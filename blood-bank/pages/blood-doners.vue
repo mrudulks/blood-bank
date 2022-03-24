@@ -20,6 +20,7 @@
 <script>
 import BHeader from '~/components/BHeader.vue'
   import api from '~/lib/js/api'
+  import model from '~/lib/js/model'
   export default {
     components:{
       BHeader,
@@ -37,6 +38,8 @@ import BHeader from '~/components/BHeader.vue'
       const dist = this.pageRoute.district;
       const Panchayath = this.pageRoute.blockpanchayaths;
       const bloodGroup = this.pageRoute.bloodgroup;
+      var filter = {};
+      filter = donorFilter(this.pageRoute)
       const response = await api.getDonors(bloodGroup,dist,Panchayath)
       if (response.status == 200) {
         this.donors = await response.json()

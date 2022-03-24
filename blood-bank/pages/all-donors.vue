@@ -81,6 +81,7 @@
                   <td>{{ items.phone }}</td>
                   <td v-if="items.status == 'Active'"><span class="active">Active</span></td>
                   <td v-else ><span class="inactive">Inactive</span></td>
+                  <td><nuxt-link :to="{ path: '/edit-donor', query: { id: items.id }}"><img style="height:1.2rem;width:1.2rem" src="../lib/images/edit.svg" alt="" srcset=""></nuxt-link></td>
                 </tr>
                 <!-- ----- -->
               </tbody>

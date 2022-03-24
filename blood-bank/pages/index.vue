@@ -47,10 +47,13 @@
 
 
         <div class="col-md-12 text-right d-flex justify-content-end">
-         
-            <span class="mt-4 ml-2"><nuxt-link class="btn btn-secondary d-flex" to="/blood-bank"><img src="../lib/images/search.svg" alt="" class="mr-3"> Search</nuxt-link></span>
-            <span class="mt-4 ml-2"><nuxt-link class="btn btn-secondary d-flex" to="/register"><img src="../lib/images/add.svg" alt="" class="mr-3">Add Donor</nuxt-link></span>
-
+          <!-- <span class="mt-4 ml-2">
+            <input type="search" id="site-search" name="q" class="form-control" placeholder="Search Donor" v-model="search" @input="searchDonor()">
+          </span> -->
+            
+            <!-- <span class="mt-4 ml-2"><nuxt-link class="btn btn-secondary d-flex" to="/blood-bank"><img src="../lib/images/search.svg" alt="" class="mr-3"> Search</nuxt-link></span> -->
+            <span class="mt-4 ml-2"><nuxt-link class="btn primary-btn d-flex" to="/register"><img src="../lib/images/add.svg" alt="" class="mr-3">Add Donor</nuxt-link></span>
+            <span class="mt-4 ml-2"><nuxt-link class="btn primary-btn d-flex" to="/all-donors">All Donors</nuxt-link></span>
         </div>
 
 
@@ -72,7 +75,7 @@
                 <tr v-for="items in donors" :key="items.id">
                   <td>{{ items.name }}</td>
                   <td>{{ items.bloodIcon }}</td>
-                  <td>{{ items.phone }}</td>
+                  <td><a :href="'tel:+91'+items.phone">{{ items.phone }}</a></td>
                   <td v-if="items.status == 'Active'"><span class="active">Active</span></td>
                   <td v-else><span class="inactive">Inactive</span></td>
                 </tr>
@@ -100,7 +103,8 @@
       return {
         items: '',
         donorsCount: '',
-        donors: ''
+        donors: '',
+        search:''
       }
     },
     async fetch() {
@@ -113,7 +117,15 @@
       const bloodDonors = await fetch('/api/donors')
       const jsonDate = await bloodDonors.json()
       this.donors = donorsList.fromArray(jsonDate)
+    },
+  methods:{
+    async searchDonor(){
+      console.log("Hii",this.search)
+      const bloodDonors = await fetch('/api/donors')
+      const jsonDate = await bloodDonors.json()
+      this.donors = donorsList.fromArray(jsonDate)
     }
+  }
   }
 
 </script>

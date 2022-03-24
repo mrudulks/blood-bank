@@ -2,44 +2,28 @@
   <div>
 
     <section class="container pt-5">
-      <h2 class="mb-3 mt-5 text-center">Register for Blood Donation</h2>
-      <form action @submit.prevent="registerNew" id="registerForm" class="card">
+      <h2 class="mb-3 mt-5 text-center">Edit Donor data</h2>
+      <form action @submit.prevent="updateDonor" id="registerForm" class="card">
         <div class="row register">
           <div class="col-md-6">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control" v-model="register.name">
+            <input type="text" name="name" id="name" class="form-control"  v-model="register.name">
           </div>
           <div class="col-md-6">
             <label for="bloodgp">Blood Group</label>
-            <select name="" id="bloodgp" class="form-control" v-model="register.blood_group">
+            <select name="" id="bloodgp" class="form-control" v-model="register.bloodgroup">
               <option v-for="items in bloodGroups" :value="items.bid" :key="items.bid">{{ items.blood_icon}}</option>
             </select>
           </div>
 
-          <div class="col-md-4">
-            <label for="age">Age</label>
-            <select name="" id="age" class="form-control" v-model="register.age">
-              <option v-for="items in ageLimit" :value="items" :key="items">{{ items }}</option>
-            </select>
-          </div>
-
-          <div class="col-md-4">
-            <label for="district">District</label>
-            <select name="" id="age" class="form-control" v-model="register.district" @change="getBp()">
-              <option v-for="items in district" :value="items.id" :key="items.id">{{ items.districtname}}</option>
-            </select>
-          </div>
-
-          <div class="col-md-4">
-            <label for="bp">Block Panchayath</label>
-            <select name="" id="age" class="form-control" v-model="register.blockPanchayath">
-              <option v-for="items in  blockPanchayath" :value="items.id" :key="items.id">{{ items.name }}</option>
-            </select>
+        <div class="col-md-4">
+            <label for="age">Last Donated</label>
+            <input type="date" class="form-control"  v-model="register.date">
           </div>
 
           <div class="col-md-6">
             <label for="mobileno">Contact Number</label>
-            <input type="text" id="mobileno" class="form-control" v-model="register.mobileno">
+            <input type="text" id="mobileno" class="form-control" v-model="register.phone">
           </div>
 
           <div class="col-md-6">
@@ -47,7 +31,7 @@
             <input type="email" name="email" id="email" class="form-control" v-model="register.email">
           </div>
           <div class="col-md-12 text-center">
-            <button class="btn btn-primary  mb-3" type="submit">Register</button>
+            <button class="btn btn-primary  mb-3" type="submit">Update</button>
           </div>
 
         </div>
@@ -70,10 +54,17 @@
         district: [],
         blockPanchayath: [],
         register: {},
-        ageLimit: 60
+        ageLimit: 60,
+        donor:'',
+        register:''
       }
     },
     async fetch() {
+        var id = this.$route.query.id
+        var donorData = await fetch('/api/donors/'+id)
+        this.donor = await donorData.json()
+        this.register = this.donor[0]
+
       const bloodGp = await api.getBloodGroups();
       if (bloodGp.status == 200) {
         this.bloodGroups = await bloodGp.json();
@@ -97,25 +88,19 @@
           this.blockPanchayath = await bp.json();
         }
       },
-      async registerNew() {
+      async updateDonor() {
 
 
         const options = {
           method: 'POST',
-          headers: {
-            '5e6ed62dec6e44fd94f48a3af3d5b610': '',
-            'content-type': 'application/json'
-          },
-          body: '{"name":"' + this.register.name + '","bloodgroup":"' + this.register.blood_group +
-            '","district":"' + this.register.district + '","phone":"' + this.register.mobileno +
-            '","block_panchayaths":"' + this.register.blockPanchayath + '","age":"' + this.register.age + '","email":"'+this.register.email+'"}'
+          body: '{"donors_id":"' + this.register.id + '","donated_time":"' + this.register.date +'"}'
         };
 
-        fetch('/api/donors/register', options)
+        fetch('/api/donors/update', options)
           .then(response => {
             if (response.status == 200) {
               this.$router.push({
-                name: 'index'
+                name: 'all-donors'
               })
             }
           })

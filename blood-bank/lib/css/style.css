@@ -36,6 +36,21 @@ p{
 .bg-blueish1{
   background-color:var(--bg6) ;
 }
+
+/* button */
+.primary-btn{
+  background-color: var(--color5);
+  color: white;
+  font-weight: 500;
+  border-color: var(--color5);
+  min-width: 10rem;
+  text-align: center;
+  justify-content: center;
+}
+.primary-btn:hover{
+  background-color: white;
+}
+
 /* blood group */
 .blood__group{
     display: flex;

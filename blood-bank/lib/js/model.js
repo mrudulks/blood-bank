@@ -1,5 +1,6 @@
 export class donorsList {
     constructor(jsonData) {
+        this.id = jsonData.id
       this.name = jsonData.name;
       this.bloodGroup = jsonData.blood_group;
       this.phone = jsonData.phone;

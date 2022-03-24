@@ -1,4 +1,4 @@
-const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsList } = require('../../controller/model')
+const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsList , updateDonor,getDonorBySearch} = require('../../controller/model')
 
 
 module.exports = async function (fastify, opts,done){
@@ -9,7 +9,16 @@ module.exports = async function (fastify, opts,done){
     // Filter & All Fetch
     
     fastify.get('/', async (req,reply)=>{
-        return await getDonorsList(req.query)
+        if(req.query.name){
+            return await getDonorBySearch(req.query.name)
+        }
+        else if(req.query){
+            return await getDonerByFilter(req.query)
+        }
+        else{
+            return await getDonorsList(req.query)
+        }
+       
     })
 
     fastify.get('/all', async (req,reply)=>{
@@ -21,7 +30,15 @@ module.exports = async function (fastify, opts,done){
     })
 
     fastify.post('/register', async (req, reply) => {
+        debugger;
         return registerNew(req.body)
     })
+
+    fastify.post('/update', async (req, reply) => {
+        var con = JSON.parse(req.body)
+        return updateDonor(con)
+    })
+
+
     done()
     }

@@ -6,7 +6,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-6 d-flex justify-center align-center justify-content-center">
           <div class="login-form card p-5 text-center">
-            <h3 class="text-center mb-4 text-white">Please Login</h3>
+            <h3 class="text-center mb-4">Please Login</h3>
             <form action @submit.prevent="loginUser" id="loginForm">
               <input type="text" class="form-control" placeholder="Username or Email" v-model="form.username">
               <input type="password" class="form-control" placeholder="Password" v-model="form.password">
@@ -72,7 +72,7 @@
 
 <style>
   .card {
-    background:var(--bg3);
+    /* background:var(--bg3); */
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px; */
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: .5rem;

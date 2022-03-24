@@ -93,7 +93,6 @@ module.exports = async function (fastify, opts, done) {
     fastify.get('/', async (req, reply) => {
         console.log(req.headers);
         if (req.headers) {
-            debugger;
             const cookies = parseCookie(req.headers.cookie);
             // console.log("Your cookies",cookies)
             if (cookies.usersession) {

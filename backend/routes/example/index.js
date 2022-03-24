@@ -18,11 +18,11 @@ module.exports = async function (fastify, opts) {
   })
 
   fastify.get('/test', async function (request, reply) {
-    
-    return updateDonor();
+    const subquery = knex.select('donors_id').from('blood_donation').whereRaw('donated_time > ? - ?::INTERVAL', [knex.fn.now(), '90 day']);
+    return knex.select('*').from('donors')
+    .whereNotIn('id', subquery)
   })
-
-  fastify.get('/date', async function (request, reply) {
-    return knex.select('*').from('users')
+  fastify.post('/update', async (request, reply) => {
+    reply.send(request.body.donors_id);
   })
 }
