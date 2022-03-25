@@ -60,7 +60,6 @@
   import BHeader from '~/components/BHeader.vue'
   import api from '~/lib/js/api'
   export default {
-     layout: 'custom',
     components: {
       BHeader,
     },

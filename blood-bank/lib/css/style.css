@@ -114,3 +114,104 @@ td span.inactive {
   font-size: .9rem;
   font-weight: 500;
 }
+
+.left-sidebar{
+  position: fixed;
+    width: 16.25rem;
+    background-color: var(--color5);
+    height: 100vh;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    margin-left: 1.25rem;
+    margin-top: 1.25rem;
+    padding: 1.5rem 1.2rem ;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+}
+.left-sidebar .left-logo{
+  display: flex;
+  align-items: center;
+}
+.left-sidebar .left-logo img{
+  width: 2.5rem;
+}
+.left-sidebar .left-logo h3{
+  color: white;
+  margin: 0;
+}
+.left-sidebar .left-navbar{
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+  padding: 2rem 0;
+}
+.left-sidebar .left-navbar .left-navitems a{
+  color: white;
+    text-decoration: none;
+    padding: 0.5rem 3rem;
+    display: block;
+    font-size: 1.2rem;
+    border-radius: .5rem;
+}
+.left-sidebar .left-navbar .left-navitems .nuxt-link-exact-active{
+  background-color: white;
+  color: var(--color5);
+}
+.main{
+  margin-left: 17.5rem;
+  margin-top: 1.25rem;
+}
+.main .main-header{
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  margin:0 1.5rem;
+  align-items: center;
+}
+table a{
+  color: black;
+}
+.menu-icon{
+  display: none;
+}
+.pt-md-5-xs-0{
+  padding-top: 3rem;
+}
+.mt-5-xs-2{
+  margin-top: 3rem;
+}
+.close-btn{
+  display: none
+}
+
+.close-btn img{
+  width: 1.5rem;
+}
+/* media Query  */
+
+@media only screen and (max-width: 600px) {
+  .left-sidebar{
+    position: absolute;
+    z-index: 9999;
+    transition: 0.5s ease;
+    width: 0;
+    opacity: 0;
+  }
+  .main{
+    margin-left: 0;
+  }
+  .menu-icon{
+    display: block;
+  }
+  .pt-md-5-xs-0{
+    padding-top: 0;
+  }
+  .mt-5-xs-2{
+    margin-top: 1.5rem;
+  }
+  .close-btn{
+    display: flex;
+    justify-content:flex-end;
+  }
+}

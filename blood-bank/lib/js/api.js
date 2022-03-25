@@ -19,10 +19,10 @@ function getDistrict(id){
 function getTaluk(districtId){
     return fetch(BASE_URL+'/blockpanchayaths?district='+districtId)
 }
-function getDonors(bloodGp,districtId,blockPan){
+function getDonors(filter){
     // if(bloodGp)
     // return fetch(BASE_URL+'/donors?blood_group='+bloodGp)
-    return fetch(BASE_URL+'/donors?bloodgroup='+bloodGp+'&district='+districtId+'&block_panchayaths='+blockPan)
+    return fetch(BASE_URL+'/donors?'+filter)
 }
 
 

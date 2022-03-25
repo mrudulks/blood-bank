@@ -46,10 +46,16 @@
 
 
 
-        <div class="col-md-12 text-right d-flex justify-content-end">
-         
-            <span class="mt-4 ml-2"><nuxt-link class="btn btn-secondary d-flex" to="/blood-bank"><img src="../lib/images/search.svg" alt="" class="mr-3"> Search</nuxt-link></span>
-            <span class="mt-4 ml-2"><nuxt-link class="btn btn-secondary d-flex" to="/register"><img src="../lib/images/add.svg" alt="" class="mr-3">Add Donor</nuxt-link></span>
+        <div class="col-md-12 text-right justify-content-end d-none">
+
+          <span class="mt-4 ml-2">
+            <nuxt-link class="btn primary-btn d-flex" to="/blood-bank"><img src="../lib/images/search.svg" alt=""
+                class="mr-3"> Search</nuxt-link>
+          </span>
+          <span class="mt-4 ml-2">
+            <nuxt-link class="btn primary-btn d-flex" to="/register"><img src="../lib/images/add.svg" alt=""
+                class="mr-3">Add Donor</nuxt-link>
+          </span>
 
         </div>
 
@@ -60,12 +66,9 @@
             <table class="table">
               <thead>
                 <tr>
-                  <!-- <th scope="col">#</th> -->
                   <th scope="col">Name</th>
                   <th scope="col">Blood Group</th>
-                  <th scope="col">Last Donated</th>
                   <th scope="col">Phone</th>
-                  <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -74,14 +77,19 @@
                 <tr v-for="items in donors" :key="items.name">
                   <td>{{ items.name }}</td>
                   <td>{{ items.bloodIcon }}</td>
-                  <td>
-                    <!-- <input v-if="isEdit" type="date" v-model="items.lastDonated" /> -->
-                    <div >{{ items.lastDonated }}</div>
-                    </td>
+
                   <td>{{ items.phone }}</td>
-                  <td v-if="items.status == 'Active'"><span class="active">Active</span></td>
-                  <td v-else ><span class="inactive">Inactive</span></td>
-                  <td><nuxt-link :to="{ path: '/edit-donor', query: { id: items.id }}"><img style="height:1.2rem;width:1.2rem" src="../lib/images/edit.svg" alt="" srcset=""></nuxt-link></td>
+
+                  <td>
+                    <div class="d-flex">
+                      <nuxt-link :to="{ path: '/edit-donor', query: { id: items.id }}"><img
+                          style="height:1.2rem;width:1.2rem" src="../lib/images/edit.svg" alt="" srcset=""></nuxt-link>
+                      <div class="ml-2"><img style="height:1.2rem;width:1.2rem" src="../lib/images/trash.svg" alt=""
+                          @click="deleteUser(items.id)"></div>
+                    </div>
+
+                  </td>
+
                 </tr>
                 <!-- ----- -->
               </tbody>
@@ -100,7 +108,9 @@
 
 <script>
   import api from '~/lib/js/api';
-  import {donorsList} from '~/lib/js/model'
+  import {
+    donorsList
+  } from '~/lib/js/model'
   export default {
     name: 'IndexPage',
     data() {
@@ -108,25 +118,37 @@
         items: '',
         donorsCount: '',
         donors: '',
-        isEdit:false,
+        isEdit: false,
       }
     },
-    async fetch() {
-      const data = await fetch('/api/')
-      this.items = data.json();
-
-      const count = await fetch('/api/donors/count')
-      this.donorsCount = await count.json();
-
-      const bloodDonors = await fetch('/api/donors/all')
-      const jsonDate = await bloodDonors.json()
-    this.donors = donorsList.fromArray(jsonDate)
-
-    },
-    methods:{
-      updateInput(e){
+    methods: {
+      updateInput(e) {
         this.isEdit = false;
+      },
+
+
+      async deleteUser(id) {
+        console.log(id)
+        var data = await fetch('/api/donors/delete/' + id)
+        var res = await data.json()
+
+        this.dataFetch()
+      },
+
+      async dataFetch() {
+        const data = await fetch('/api/')
+        this.items = data.json();
+
+        const count = await fetch('/api/donors/count')
+        this.donorsCount = await count.json();
+
+        const bloodDonors = await fetch('/api/donors/all')
+        const jsonDate = await bloodDonors.json()
+        this.donors = donorsList.fromArray(jsonDate)
       }
+    },
+    mounted(){
+      this.dataFetch()
     }
   }
 
@@ -165,8 +187,10 @@
     color: rgba(107 114 128);
     font-weight: 300;
   }
-.btn img{
-  width: 1.5rem;
-  height: 1.5rem;
-}
+
+  .btn img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="pt-5 pb-5 ">
-      <h2 class="text-center text-red">Blood Bank</h2>
+    <div class="pt-md-5-xs-0 pb-5 ">
+      
       <div class="row">
         <div class="col-md-4">
-          <div class="card mt-5">
+          <div class="card mt-5-xs-2">
             <div class="p-3 img-users">
               <img src="../lib/images/users.svg" alt="">
             </div>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-4">
-          <div class="card mt-5">
+          <div class="card mt-5-xs-2">
             <div class="p-3 img-users">
               <img src="../lib/images/users.svg" alt="">
             </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="col-md-4">
-          <div class="card mt-5">
+          <div class="card mt-5-xs-2">
             <div class="p-3 img-users">
               <img src="../lib/images/users.svg" alt="">
             </div>
@@ -46,7 +46,7 @@
 
 
 
-        <div class="col-md-12 text-right d-flex justify-content-end">
+        <div class="col-md-12 text-right  justify-content-end d-none">
           <!-- <span class="mt-4 ml-2">
             <input type="search" id="site-search" name="q" class="form-control" placeholder="Search Donor" v-model="search" @input="searchDonor()">
           </span> -->
@@ -67,7 +67,7 @@
                   <th scope="col">Name</th>
                   <th scopr="col">Blood Group</th>
                   <th scope="col">Phone</th>
-                  <th scope="col">Status</th>
+                  <!-- <th scope="col">Place</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -76,8 +76,7 @@
                   <td>{{ items.name }}</td>
                   <td>{{ items.bloodIcon }}</td>
                   <td><a :href="'tel:+91'+items.phone">{{ items.phone }}</a></td>
-                  <td v-if="items.status == 'Active'"><span class="active">Active</span></td>
-                  <td v-else><span class="inactive">Inactive</span></td>
+                  <!-- <td></td> -->
                 </tr>
                 <!-- ----- -->
               </tbody>
@@ -107,7 +106,16 @@
         search:''
       }
     },
-    async fetch() {
+
+  methods:{
+    async searchDonor(){
+      console.log("Hii",this.search)
+      const bloodDonors = await fetch('/api/donors')
+      const jsonDate = await bloodDonors.json()
+      this.donors = donorsList.fromArray(jsonDate)
+    },
+
+    async dataFetch(){
       const data = await fetch('/api/')
       this.items = data.json();
 
@@ -117,14 +125,10 @@
       const bloodDonors = await fetch('/api/donors')
       const jsonDate = await bloodDonors.json()
       this.donors = donorsList.fromArray(jsonDate)
-    },
-  methods:{
-    async searchDonor(){
-      console.log("Hii",this.search)
-      const bloodDonors = await fetch('/api/donors')
-      const jsonDate = await bloodDonors.json()
-      this.donors = donorsList.fromArray(jsonDate)
     }
+  },
+  mounted(){
+    this.dataFetch()
   }
   }
 

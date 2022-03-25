@@ -57,7 +57,9 @@ function getLoggedUsers(session) {
 function getDonorsList() {
   const subquery = knex.select('donors_id').from('blood_donation').whereRaw('donated_time > ? - ?::INTERVAL', [knex.fn.now(), '90 day']);
   return knex.select('*').from('donors')
-  .whereNotIn('id', subquery).leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+  .whereNotIn('id', subquery)
+  // .leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+  .leftJoin('district','donors.district','district.id')
   .orderBy('name');
 }
 
@@ -66,7 +68,9 @@ function getDonorBySearch(name){
   console.log(name)
   const subquery = knex.select('donors_id').from('blood_donation').whereRaw('donated_time > ? - ?::INTERVAL', [knex.fn.now(), '90 day']);
   return knex.select('*').from('donors')
-  .whereNotIn('id', subquery).leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+  .whereNotIn('id', subquery)
+  .leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+  .leftJoin('district','donors.district','district.id')
   .whereLike('name', name)
 }
 
@@ -74,9 +78,14 @@ function getDonorBySearch(name){
 function getAllDonorsList() {
   return knex.select('*').from('donors')
   .leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
-  .leftJoin('blood_donation', 'donors.id', 'blood_donation.donors_id')
+  // .leftJoin('blood_donation', 'donors.id', 'blood_donation.donors_id')
 }
 
+
+function deleteDonor(id){
+  console.log(id)
+  return knex('donors').del(['id']).where({id: id})
+}
 
 //BlockPanchayaths
 
@@ -108,7 +117,7 @@ function getDonerById(id) {
   if (id != null && id != 'count') {
     return knex('donors').where('id', id)
   } else if (id == "count") {
-    return knex('donors').count('status');
+    return knex('donors').count('id');
   } else {
     // return knex('donors').orderBy('name');
     return "Hii my boy"
@@ -132,6 +141,7 @@ function getDonerByFilter(filter){
      return knex.select('*').from('donors')
      .whereNotIn('id', subquery)
      .leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+     
      .where(newArray[0])
   }
   else{
@@ -173,7 +183,6 @@ async function updateDonor(itemdata) {
   var donated_time = dateParser(itemdata.donated_time);
   data = knex('blood_donation').where('donors_id', donors_id)
   var item = await data;
-  debugger;
   if (item[0]?.donors_id == donors_id) {
     return knex('blood_donation')
       .where({
@@ -198,7 +207,7 @@ function dateParser(date){
 
 exports.registerNew = registerNew;
 exports.updateDonor = updateDonor;
-
+exports.deleteDonor = deleteDonor;
 
 
 

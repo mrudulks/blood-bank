@@ -1,4 +1,4 @@
-const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsList , updateDonor,getDonorBySearch} = require('../../controller/model')
+const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsList , updateDonor,getDonorBySearch,deleteDonor} = require('../../controller/model')
 
 
 module.exports = async function (fastify, opts,done){
@@ -30,13 +30,16 @@ module.exports = async function (fastify, opts,done){
     })
 
     fastify.post('/register', async (req, reply) => {
-        debugger;
         return registerNew(req.body)
     })
 
     fastify.post('/update', async (req, reply) => {
         var con = JSON.parse(req.body)
         return updateDonor(con)
+    })
+
+    fastify.get('/delete/:id',async(req, reply)=>{
+        return deleteDonor(req.params.id) 
     })
 
 

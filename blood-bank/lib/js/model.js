@@ -29,3 +29,18 @@ export class donorsList {
         return null
     }
   }
+
+function filterString(filter){
+    var newKeys = Object.keys(filter);
+    var newArray = [];
+    for (let i = 0; i < newKeys.length;i++){
+        let str = newKeys[i]+'='+filter[newKeys[i]]
+        newArray.push(str);
+        console.log("Your items",newArray)
+    }
+    let newFilter = newArray.join('&')
+    return newFilter;
+}
+export default{
+  filterString
+}

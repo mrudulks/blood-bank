@@ -1,6 +1,5 @@
 <template>
   <div>
-    <b-header></b-header>
     <section class="container pt-5">
       <h3 class="text-center mb-5">Search Blood in your area</h3>
       <div class="blood__group">
@@ -140,14 +139,6 @@
         donors: ''
       }
     },
-    async fetch() {
-      const itemsList = await api.getDistrict()
-        .then((res) => res.json())
-      this.districts = itemsList
-      const data = await api.getAllDonors()
-      this.donors = await data.json()
-
-    },
     methods: {
       async getLocalBody() {
         const response = await api.getTaluk(this.form.district)
@@ -164,7 +155,19 @@
             blockpanchayaths: this.form.blockPanchayath
           }
         })
+      },
+
+      async getDistrict(){
+        const itemsList = await api.getDistrict()
+        .then((res) => res.json())
+      this.districts = itemsList
+      const data = await api.getAllDonors()
+      this.donors = await data.json()
       }
+    },
+
+    mounted(){
+      this.getDistrict();
     }
   }
 

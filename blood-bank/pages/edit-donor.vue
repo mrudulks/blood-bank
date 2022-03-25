@@ -7,7 +7,7 @@
         <div class="row register">
           <div class="col-md-6">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control"  v-model="register.name">
+            <input type="text" name="name" id="name" class="form-control" v-model="register.name">
           </div>
           <div class="col-md-6">
             <label for="bloodgp">Blood Group</label>
@@ -16,9 +16,9 @@
             </select>
           </div>
 
-        <div class="col-md-4">
+          <div class="col-md-4">
             <label for="age">Last Donated</label>
-            <input type="date" class="form-control"  v-model="register.date">
+            <input type="date" class="form-control" v-model="register.date">
           </div>
 
           <div class="col-md-6">
@@ -44,7 +44,6 @@
   import BHeader from '~/components/BHeader.vue'
   import api from '~/lib/js/api'
   export default {
-     layout: 'custom',
     components: {
       BHeader,
     },
@@ -55,15 +54,24 @@
         blockPanchayath: [],
         register: {},
         ageLimit: 60,
-        donor:'',
-        register:''
+        donor: '',
+        register: ''
       }
     },
-    async fetch() {
+    methods: {
+      async getBp() {
+        console.log('Hii')
+        const bp = await api.getTaluk(this.register.district);
+        if (bp.status == 200) {
+          this.blockPanchayath = await bp.json();
+        }
+      },
+
+      async dataFetch(){
         var id = this.$route.query.id
-        var donorData = await fetch('/api/donors/'+id)
-        this.donor = await donorData.json()
-        this.register = this.donor[0]
+      var donorData = await fetch('/api/donors/' + id)
+      this.donor = await donorData.json()
+      this.register = this.donor[0]
 
       const bloodGp = await api.getBloodGroups();
       if (bloodGp.status == 200) {
@@ -76,24 +84,15 @@
       if (districtfetch.status == 200) {
         this.district = await districtfetch.json();
       }
-
-      // District
-
-    },
-    methods: {
-      async getBp() {
-        console.log('Hii')
-        const bp = await api.getTaluk(this.register.district);
-        if (bp.status == 200) {
-          this.blockPanchayath = await bp.json();
-        }
       },
+
+
       async updateDonor() {
 
 
         const options = {
           method: 'POST',
-          body: '{"donors_id":"' + this.register.id + '","donated_time":"' + this.register.date +'"}'
+          body: '{"donors_id":"' + this.register.id + '","donated_time":"' + this.register.date + '"}'
         };
 
         fetch('/api/donors/update', options)
@@ -107,6 +106,9 @@
         // .then(response => console.log(response))
         // .catch(err => console.error(err));
       }
+    },
+    mounted(){
+      this.dataFetch();
     }
   }
 
