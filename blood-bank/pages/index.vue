@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div class="pt-md-5-xs-0 pb-5 ">
+    <div class="pt-md-1-xs-0 pb-5 ">
       
       <div class="row">
         <div class="col-md-4">
-          <div class="card mt-5-xs-2">
+          <div class="card mt-1-xs-2">
             <div class="p-3 img-users">
               <img src="../lib/images/users.svg" alt="">
             </div>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-4">
-          <div class="card mt-5-xs-2">
+          <div class="card mt-1-xs-2">
             <div class="p-3 img-users">
               <img src="../lib/images/users.svg" alt="">
             </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="col-md-4">
-          <div class="card mt-5-xs-2">
+          <div class="card mt-1-xs-2">
             <div class="p-3 img-users">
               <img src="../lib/images/users.svg" alt="">
             </div>
