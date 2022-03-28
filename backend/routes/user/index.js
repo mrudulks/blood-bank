@@ -49,6 +49,35 @@ function parseCookie(cookieString) {
 }
 
 
+async function validateUser(req,reply){
+    if (req.headers) {debugger;
+        if(!req.headers.cookie){
+            reply
+                .code(403)
+                .send({
+                   message:'not logged in'
+                })
+        }
+        else{
+            const cookies = parseCookie(req.headers.cookie);
+        if (cookies.usersession) {
+            console.log("user cookie", cookies.usersession);
+            let user = await getLoggedUsers(cookies.usersession);
+            return user
+        } else {
+            reply
+                .code(403)
+                .send({
+                   message:'not logged in'
+                })
+        }
+        }
+
+    }
+}
+
+
+
 module.exports = async function (fastify, opts, done) {
     fastify.get('/users', async (req, reply) => {
         // return await getUsers()
@@ -57,10 +86,19 @@ module.exports = async function (fastify, opts, done) {
     })
 
     fastify.get('/users/:id', async (req, reply) => {
+        var validUser = await validateUser(req,reply)
+       if(!validUser){
+           return 
+       }
         return await getUsers(req.params.id)
     })
 
-    fastify.get('/auth', async (req, reply) => {
+
+    fastify.get('/newauth', async (req, reply) => {
+       var validUser = await validateUser(req,reply)
+       if(!validUser){
+           return 
+       }
         return await userAuth(req.query)
     })
 

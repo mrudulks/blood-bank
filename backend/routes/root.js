@@ -62,35 +62,35 @@ return data[0].count || 1
 
 module.exports = async function (fastify, opts) {
   fastify.get('/', async function (request, reply) {
-   
-    let viewCount;
-    let sessionId;
-    if (request.headers.cookie) {
-      const cookies = parseCookie(request.headers.cookie);
-      if (cookies.sessionid) {
-      viewCount = await getSession(cookies.sessionid)
-        viewCount++
+    return "Hii "
+  //   let viewCount;
+  //   let sessionId;
+  //   if (request.headers.cookie) {
+  //     const cookies = parseCookie(request.headers.cookie);
+  //     if (cookies.sessionid) {
+  //     viewCount = await getSession(cookies.sessionid)
+  //       viewCount++
         
-        storeSessionData(cookies.sessionid, viewCount || 1)
-        console.log(sessionStore)
-        return updateSession(cookies.sessionid, viewCount || 1)
-      } else {
-        sessionId = genRandomToken()
-        reply.header('set-cookie', `sessionid=${sessionId}`);
-        viewCount = 1
-        storeSessionData(sessionId, viewCount)
-        // console.log(sessionStore)
-        return updateSession(sessionId, viewCount)
-      }
-    } else {
-      debugger;
-      sessionId = genRandomToken()
-      reply.header('set-cookie', `sessionid=${sessionId}`);
-      viewCount = 1
-      storeSessionData(sessionId, viewCount)
-      // console.log(sessionStore)
-      return insertSession(sessionId, viewCount)
-    }
+  //       storeSessionData(cookies.sessionid, viewCount || 1)
+  //       console.log(sessionStore)
+  //       return updateSession(cookies.sessionid, viewCount || 1)
+  //     } else {
+  //       sessionId = genRandomToken()
+  //       reply.header('set-cookie', `sessionid=${sessionId}`);
+  //       viewCount = 1
+  //       storeSessionData(sessionId, viewCount)
+  //       // console.log(sessionStore)
+  //       return updateSession(sessionId, viewCount)
+  //     }
+  //   } else {
+  //     debugger;
+  //     sessionId = genRandomToken()
+  //     reply.header('set-cookie', `sessionid=${sessionId}`);
+  //     viewCount = 1
+  //     storeSessionData(sessionId, viewCount)
+  //     // console.log(sessionStore)
+  //     return insertSession(sessionId, viewCount)
+  //   }
+  // })
   })
-
 }

@@ -122,9 +122,7 @@
   import BHeader from '~/components/BHeader.vue'
   import api from '~/lib/js/api'
   export default {
-    components: {
-      BHeader,
-    },
+    layout: 'custom',
     data() {
       return {
         form: {},
@@ -139,50 +137,11 @@
       '$route.query': '$fetch'
     },
     async fetch() {
-      const itemsList = await api.getDistrict()
-        .then((res) => res.json())
-      this.districts = itemsList
-
-
-      if(this.$route.query != null){
-          console.log("Hiii")
-         const bloodDonors = await api.getDonors(this.$route.query.blood_group)
-         if(bloodDonors.status == 200){
-             this.donors = await bloodDonors.json()
-         }
-      }
-
-        const testing = await fetch('http://localhost:5000/items')
-        this.items = await testing.json()
-
-
+    this.items = await fetch('/api/user/users/3e41310f-5513-4980-8ae5-06aa1ed095ca')
+    this.donors =  await this.items.json()
     },
     methods: {
-      async getLocalBody() {
-        const response = await api.getTaluk(this.form.district)
-        if (response.status === 200) {
-          this.localbody = await response.json();
-        }
-      },
-      getDonors() {
-        this.$router.push({
-          name: 'blood-doners',
-          query: {
-            district: this.form.district,
-            bloodgroup: this.form.radio,
-            blockpanchayaths: this.form.blockPanchayath
-          }
-        })
-      },
-      radioButton(event) {
-        var data = event.target.value
-        this.$router.push({
-          name: 'testing',
-          query: {
-            blood_group: data
-          }
-        })
-      }
+      
     }
   }
 

@@ -1,12 +1,13 @@
 <template>
   <div>
     
-    <section class="container pt-5">
+    <section class="container">
       <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 d-flex justify-center align-center justify-content-center">
+        <div class="col-md-3"></div> 
+        <div class="col-md-6 d-flex vh-100  align-items-center justify-content-center">
           <div class="login-form card p-5 text-center">
             <h3 class="text-center mb-4">Please Login</h3>
+            <p class="text-danger mb-3" v-if="errorMsg">{{errorMsg}}</p>
             <form action @submit.prevent="loginUser" id="loginForm">
               <input type="text" class="form-control" placeholder="Username or Email" v-model="form.username">
               <input type="password" class="form-control" placeholder="Password" v-model="form.password">
@@ -31,7 +32,8 @@
       return {
         form: {},
         user:[],
-        items:''
+        items:'',
+        errorMsg:''
       }
     },
     methods: {
@@ -56,9 +58,14 @@
                 name: 'index'
               })
             }
+            // else if (this.user)
             else{
-                console.log("No user found")
+                console.log("No user found",this.user)
             }
+        }
+        else if(response.status == 500){
+          this.errorMsg = "Enter a valid Username and Password"
+          console.log("invalid user")
         }
         
       }

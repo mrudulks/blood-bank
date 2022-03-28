@@ -53,7 +53,12 @@
 
         if (item.status == 200) {
           this.user = await item.json();
+          
         }
+
+
+        var validUser = await fetch('/api/donors/auth')
+        var uservalid = await validUser.json();
       },
 
       open(){
