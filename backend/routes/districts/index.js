@@ -10,6 +10,7 @@ module.exports = async function (fastify, opts) {
                 return 
             }
     return await getDistrict()
+    // reply.code(403).send("Items")
 })
 // ID
 fastify.get('/:id', async function (request, reply) {

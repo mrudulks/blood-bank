@@ -119,7 +119,8 @@
       const data = await fetch('/api/')
       this.items = data.json();
 
-      const count = await fetch('/api/donors/count')
+      // const count = await fetch('/api/donors/count')
+      const count = await api.totalUsers();
       this.donorsCount = await count.json();
 
       const bloodDonors = await fetch('/api/donors')

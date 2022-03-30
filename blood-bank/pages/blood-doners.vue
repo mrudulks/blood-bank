@@ -52,7 +52,10 @@
     },
 
     methods: {
+
       async dataFetch() {
+        const ser = this;
+        console.log("Items In this",ser)
         this.filter = model.filterString(this.pageRoute)
         const response = await api.getDonors(this.filter)
         if (response.status == 200) {
@@ -62,7 +65,7 @@
 
         // Blood Groups
 
-        const bloodGp = await api.getBloodGroups(bloodGroup);
+        const bloodGp = await api.getBloodGroups(bloodGroup, ser);
         if (bloodGp.status == 200) {
           this.bloodGroups = await bloodGp.json();
         }

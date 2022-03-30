@@ -95,33 +95,6 @@
       </div>
 
     </section>
-    <section class="pt-5 pb-5 d-none">
-      <div class="container">
-        <h4 class="text-center mb-4">Blood Donors</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <!-- <th scope="col">#</th> -->
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- ----- -->
-            <tr v-for="items in donors" :key="items.id">
-              <td>{{ items.name }}</td>
-              <td>{{ items.phone }}</td>
-              <td v-if="items.status == 'Active'"><span class="active">Active</span></td>
-              <td v-else ><span class="inactive">Inactive</span></td>
-            </tr>
-            <!-- ----- -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-
   </div>
 </template>
 <script>
@@ -159,8 +132,9 @@
 
       async getDistrict(){
         const itemsList = await api.getDistrict()
-        .then((res) => res.json())
-      this.districts = itemsList
+        this.districts = await itemsList.json()
+      //   .then((res) => res.json())
+      // this.districts = itemsList
       const data = await api.getAllDonors()
       this.donors = await data.json()
       }

@@ -1,43 +1,52 @@
 const BASE_URL = "/api";
+const FRONT_URL = "http://localhost:3000"
+async function myFetch(url, options){
+    const res =  await fetch( url, options)
+    if(res.status == 403){
+       window.location.href= FRONT_URL+'/login'
+    }
+    return res
+}
 
 function totalUsers(){
-    return fetch(BASE_URL+'/donors/count')
+    return myFetch(BASE_URL+'/donors/count')
 }
 
 
 function getDistrict(id){
     if(id == null){
-        return fetch(BASE_URL+'/districts')
+        return myFetch(BASE_URL+'/districts')
     }
     else{
-        return fetch(BASE_URL+'/districts/'+id)
+        return myFetch(BASE_URL+'/districts/'+id)
     }
     
 }
 
 
 function getTaluk(districtId){
-    return fetch(BASE_URL+'/blockpanchayaths?district='+districtId)
+    return myFetch(BASE_URL+'/blockpanchayaths?district='+districtId)
 }
 function getDonors(filter){
     // if(bloodGp)
     // return fetch(BASE_URL+'/donors?blood_group='+bloodGp)
-    return fetch(BASE_URL+'/donors?'+filter)
+    return myFetch(BASE_URL+'/donors?'+filter)
 }
 
 
 function getAllDonors(){
-    return fetch(BASE_URL+'/donors')
+    return myFetch(BASE_URL+'/donors')
 }
 
 
 // Blood Groups
 
-function getBloodGroups(id){
+function getBloodGroups(id,ser){
     if(id != null){
-        return fetch(BASE_URL+'/groups/'+id)
+        return myFetch(BASE_URL+'/groups/'+id)
     }
-    return fetch(BASE_URL+'/groups')
+    console.log("My Blood gp",ser)
+    return myFetch(BASE_URL+'/groups')
 }
 
 export default{
@@ -45,5 +54,6 @@ export default{
     getTaluk,
     getDonors,
     getBloodGroups,
-    getAllDonors
+    getAllDonors,
+    totalUsers
 }
