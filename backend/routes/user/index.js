@@ -3,16 +3,22 @@ const {
     getUsers,
     userAuth,
     tokenUpdate,
-    getLoggedUsers
+    getLoggedUsers,
+    getDonerByFilter
 } = require('../../controller/model')
 
 
+const {
+    adminUserRegister,checkUserExist,deleteUser
+} = require('../../controller/newuser')
 
 const {
     knex
 } = require('../../database');
 
 const crypto = require('crypto');
+
+const Joi = require('joi');
 
 const sessionStore = {};
 
@@ -49,28 +55,28 @@ function parseCookie(cookieString) {
 }
 
 
-async function validateUser(req,reply){
-    if (req.headers) {debugger;
-        if(!req.headers.cookie){
+async function validateUser(req, reply) {
+    if (req.headers) {
+        debugger;
+        if (!req.headers.cookie) {
             reply
                 .code(403)
                 .send({
-                   message:'not logged in'
+                    message: 'not logged in'
                 })
-        }
-        else{
-            const cookies = parseCookie(req.headers.cookie);
-        if (cookies.usersession) {
-            console.log("user cookie", cookies.usersession);
-            let user = await getLoggedUsers(cookies.usersession);
-            return user
         } else {
-            reply
-                .code(403)
-                .send({
-                   message:'not logged in'
-                })
-        }
+            const cookies = parseCookie(req.headers.cookie);
+            if (cookies.usersession) {
+                console.log("user cookie", cookies.usersession);
+                let user = await getLoggedUsers(cookies.usersession);
+                return user
+            } else {
+                reply
+                    .code(403)
+                    .send({
+                        message: 'not logged in'
+                    })
+            }
         }
 
     }
@@ -85,20 +91,24 @@ module.exports = async function (fastify, opts, done) {
         return await getUsers()
     })
 
+    fastify.delete('/users/:id', async (req, reply) => {
+        return await deleteUser(req.params.id)
+    })
+
     fastify.get('/users/:id', async (req, reply) => {
-        var validUser = await validateUser(req,reply)
-       if(!validUser){
-           return 
-       }
+        var validUser = await validateUser(req, reply)
+        if (!validUser) {
+            return
+        }
         return await getUsers(req.params.id)
     })
 
 
     fastify.get('/newauth', async (req, reply) => {
-       var validUser = await validateUser(req,reply)
-       if(!validUser){
-           return 
-       }
+        var validUser = await validateUser(req, reply)
+        if (!validUser) {
+            return
+        }
         return await userAuth(req.query)
     })
 
@@ -130,26 +140,81 @@ module.exports = async function (fastify, opts, done) {
 
     fastify.get('/', async (req, reply) => {
         console.log(req.headers);
+
         if (req.headers) {
-            const cookies = parseCookie(req.headers.cookie);
-            // console.log("Your cookies",cookies)
-            if (cookies.usersession) {
-                console.log("user cookie", cookies.usersession);
-                let user = await getLoggedUsers(cookies.usersession);
-                // console.log(user)
-                return user
-            } else {
+            if (!req.headers.cookie) {
                 reply
-                    .code(500)
+                    .code(403)
                     .send({
-                        hello: 'world'
+                        message: 'please Login'
                     })
+            } else {
+                const cookies = parseCookie(req.headers.cookie);
+                // console.log("Your cookies",cookies)
+                if (cookies.usersession) {
+                    console.log("user cookie", cookies.usersession);
+                    let user = await getLoggedUsers(cookies.usersession);
+                    // console.log(user)
+                    return user
+                }
+
             }
 
         }
 
     })
 
+    //New User Insert
+    fastify.get('/newuser', async (req, reply) => {
+        return "Hiiii imru"
+    })
 
+    fastify.post('/', async (req, reply) => {
+
+        //Request Validation
+        const { error } = validateRequest(req.body);
+        if(error){
+            return reply.status(400).send(error.message)
+        } 
+
+        //Check User Already Exists
+        debugger;
+        const results = await checkUserExist(req,reply);
+        if(results){
+           
+                return reply.status(403).send(results.message)
+        }
+        else{
+            try{
+                const newRes =  await adminUserRegister(req.body)
+                return ne
+            }
+            catch(error){
+                let obj = {mesage:"There was a error in column "+error.column,
+                details:error.detail}
+                return obj
+            }
+            
+        }   
+    })
     done()
+}
+
+function validateRequest(request){
+    const schema = Joi.object({
+        first_name: Joi.string()
+            .min(3)
+            .max(30)
+            .required(),
+        last_name: Joi.string()
+            .required(),
+        email: Joi.string()
+            .required(),
+
+        password: Joi.string()
+            .min(8)
+            .required()
+    })
+
+    return schema.validate(request);
 }

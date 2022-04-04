@@ -2,7 +2,8 @@
   <div>
    
     <section class="container pt-5">
-      <h2 class="mb-3 mt-5 text-center">Register for Blood Donation</h2>
+      <h2 class="mb-3 mt-5 text-center">New User</h2>
+      <p class="text-danger text-center" v-if="errorMsg">{{ errorMsg}}</p>
       <form action @submit.prevent="userRegister()" id="registerForm">
         <div class="row register">
 
@@ -26,36 +27,24 @@
             <input type="password" id="password" class="form-control" v-model="user.password">
           </div>
 
-          <div class="col-md-6">
-            <label for="password">Password</label>
-            <input type="date" id="password" class="form-control" value="12-05-1999" v-model="user.date">
-          </div>
-
         </div>
-        <div class="col-md-12">
-          <button class="btn btn-primary  mb-3" type="submit">Login</button>
+        <div class="col-md-12 text-center">
+          <button class="btn primary-btn  mb-3" type="submit">Login</button>
         </div>
       </form>
     </section>
-
-    <input-date :date="modelValue" ></input-date>
   </div>
 </template>
 <script>
  
   //   import api from '~/lib/js/api'
-  import inputDate from '~/components/inputFields/inputDate.vue'
   export default {
-     layout: 'custom',
-     components:{
-       inputDate,
-     },
-
     data() {
       return {
         user: {},
         userResponse: '',
-        modelValue:''
+        modelValue:'',
+        errorMsg:''
       }
     },
     methods: {
@@ -65,22 +54,13 @@
           headers: {
             'content-type': 'application/json'
           },
-          body: '{"first_name":"' + this.user.firstName + '","second_name":"' + this.user.secondName +
+          body: '{"first_name":"' + this.user.firstName + '","last_name":"' + this.user.secondName +
             '","email":"' + this.user.email + '","password":"' + this.user.password + '"}'
         };
 
-        const response = await fetch('http://127.0.0.1:5000/admin/users', options)
-        if (response.status == 200) {
-          const data = await response
-          // if(this.user.length != 0){
-          //     // console.log(data[0].first_name);
-          //      this.$router.push({
-          //     name: 'blood-bank'
-          //   })
-          // }
-          // else{
-          //     console.log("No user found")
-          // }
+        const response = await fetch('/api/user', options)
+        if(response.status == 403){
+          this.errorMsg = "User Already Exists"
         }
       }
     }
