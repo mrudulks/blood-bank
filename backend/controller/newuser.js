@@ -1,4 +1,3 @@
-const { send } = require('vite');
 const {
     knex
 } = require('../database');
