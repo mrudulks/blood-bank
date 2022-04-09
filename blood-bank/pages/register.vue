@@ -45,6 +45,7 @@
           <div class="col-md-6">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" class="form-control" v-model="register.email">
+            
           </div>
           <div class="col-md-12 text-center">
             <button class="btn btn-primary  mb-3" type="submit">Register</button>
@@ -53,11 +54,33 @@
         </div>
 
       </form>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card row">
+              
+                <h6 class="d-flex w-100">Upload file(CSV)</h6> 
+              
+            
+            <input type="file" name="" id="file" ref="myFiles" @change="check($event)">
+            <button @click="dataInsert()" class="btn primary-btn">Upload</button>
+            <div class="error-box pt-2 text-danger" v-if="errorMsg.details">
+              <p>{{errorMsg.message}}</p>
+              <p>{{errorMsg.details}}</p>
+            </div>
+          </div>
+          </div>
+          <div class="col-md-12">
+            
+            
+          </div>
+        </div>
     </section>
   </div>
 </template>
 <script>
   import BHeader from '~/components/BHeader.vue'
+  import axios from 'axios'
   import api from '~/lib/js/api'
   export default {
     components: {
@@ -69,7 +92,13 @@
         district: [],
         blockPanchayath: [],
         register: {},
-        ageLimit: 60
+        ageLimit: 60,
+        files: '',
+        errorMsg:{
+          details:'',
+          message:''
+        },
+        data:{}
       }
     },
     async fetch() {
@@ -89,6 +118,11 @@
 
     },
     methods: {
+      async check(event) {
+        let data = new FormData();
+        let file = event.target.files[0];
+        console.log(file)
+      },
       async getBp() {
         console.log('Hii')
         const bp = await api.getTaluk(this.register.district);
@@ -97,8 +131,6 @@
         }
       },
       async registerNew() {
-
-
         const options = {
           method: 'POST',
           headers: {
@@ -107,7 +139,8 @@
           },
           body: '{"name":"' + this.register.name + '","bloodgroup":"' + this.register.blood_group +
             '","district":"' + this.register.district + '","phone":"' + this.register.mobileno +
-            '","block_panchayaths":"' + this.register.blockPanchayath + '","age":"' + this.register.age + '","email":"'+this.register.email+'"}'
+            '","block_panchayaths":"' + this.register.blockPanchayath + '","age":"' + this.register.age +
+            '","email":"' + this.register.email + '"}'
         };
 
         fetch('/api/donors/register', options)
@@ -120,6 +153,32 @@
           })
         // .then(response => console.log(response))
         // .catch(err => console.error(err));
+      },
+      async dataInsert() {
+        let serve = this
+        this.files = this.$refs.myFiles.files
+        let data = new FormData();
+        data.append('avatar', this.files[0])
+        await axios.post('/api/donors/upload', data, {
+          header: {
+            'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+            'Content-Type': 'multipart/form-data'
+          },
+        })
+       .then(res => {
+         if(res.status == 200){
+           if(res.data.details){
+              this.errorMsg.details = res.data.details;
+              this.errorMsg.message = res.data.message;
+           }
+           else{
+          this.$router.push({
+                name: 'index'
+              })
+           }
+           
+         }
+       })
       }
     }
   }
@@ -136,6 +195,10 @@
   .register input,
   .register select {
     margin-bottom: 1.5rem;
+  }
+
+  .input-file {
+    display: block;
   }
 
 </style>

@@ -2,7 +2,15 @@ const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsL
 
 const { validateUser } = require('../../controller/validateuser')
 
+const { csvUpload } = require('../../controller/csvparser')
+
+const multer = require('fastify-multer')
+const upload = multer({ dest: '../uploads/' })
+
 module.exports = async function (fastify, opts,done){
+    // Multer Register
+    fastify.register(multer.contentParser)
+    
     fastify.get('/:id', async (req,reply)=>{
         return await getDonerById(req.params.id)
     }) 
@@ -67,6 +75,17 @@ module.exports = async function (fastify, opts,done){
         return deleteDonor(req.params.id) 
     })
 
+    // Upload donors file 
+
+    fastify.route({
+        method: 'POST',
+        url: '/upload',
+        preHandler: upload.single('avatar'),
+        handler: async function(request, reply) {
+          console.log(request.file.filename)
+          return csvUpload(request,reply)
+        }
+      })
 
     done()
     }
