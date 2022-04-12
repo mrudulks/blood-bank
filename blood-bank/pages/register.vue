@@ -181,9 +181,10 @@
          }
        })
       },
-      localStorageFetch(){
-        const localUser = JSON.parse(localStorage.getItem('user'));
-        this.oid = localUser[0].o_id
+      async localStorageFetch(){
+        const localUser = await fetch('/api/user/new')
+    const userData = await localUser.json()
+    this.oid = userData[0].o_id
       }
     },
     mounted(){

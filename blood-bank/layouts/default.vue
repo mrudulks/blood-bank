@@ -25,7 +25,7 @@
     </aside>
     <div class="main">
       <header class="main-header">
-        <p class="text-capitalize font-weight-bold text-capitalize text-secondary mb-0 mr-2" v-for="items in user" :key="items">{{items.first_name +' '+ items.last_name}}</p>
+        <p class="text-capitalize font-weight-bold text-capitalize text-secondary mb-0 mr-2" v-for="items in user" :key="items.id">{{items.first_name +' '+ items.last_name}}</p>
         <img src="../lib/images/menu.svg" alt="" class="menu-icon" @click="open()">
       </header>
       <Nuxt />
@@ -43,7 +43,7 @@
     },
     methods: {
       async dataFetch() {
-        var item = await fetch('/api/user')
+        var item = await fetch('/api/user/new')
         if (item.status == 403) {
           this.$router.push({
             name: 'login'

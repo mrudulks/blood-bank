@@ -72,7 +72,7 @@
               </thead>
               <tbody>
                 <!-- ----- -->
-                <tr v-for="items in donors" :key="items.id">
+                <tr v-for="items in donors" :key="items.name">
                   <td>{{ items.name }}</td>
                   <td>{{ items.bloodIcon }}</td>
                   <td><a :href="'tel:+91'+items.phone">{{ items.phone }}</a></td>
@@ -107,7 +107,12 @@
         oid:''
       }
     },
+  async fetch(){
+    const localUser = await fetch('/api/user/new')
+    const userData = await localUser.json()
+    this.oid = userData[0].o_id
 
+  },
   methods:{
     async searchDonor(){
       console.log("Hii",this.search)
@@ -128,13 +133,9 @@
       const jsonDate = await bloodDonors.json()
       this.donors = donorsList.fromArray(jsonDate)
     },
-    localStorageFetch(){
-        const localUser = JSON.parse(localStorage.getItem('user'));
-        this.oid = localUser[0].o_id
-      }
   },
   mounted(){
-    this.localStorageFetch(),
+   
     this.dataFetch()
   }
   }
