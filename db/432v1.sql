@@ -1219,7 +1219,7 @@ INSERT INTO "block_panchayaths" ("id", "name", "district", "created_by", "update
 
 DROP TABLE IF EXISTS "blood_donation";
 DROP SEQUENCE IF EXISTS blood_donation_id_seq;
-CREATE SEQUENCE blood_donation_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 3 CACHE 1;
+CREATE SEQUENCE blood_donation_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 4 CACHE 1;
 
 CREATE TABLE "public"."blood_donation" (
     "id" integer DEFAULT nextval('blood_donation_id_seq') NOT NULL,
@@ -1228,10 +1228,6 @@ CREATE TABLE "public"."blood_donation" (
     CONSTRAINT "blood_donation_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
-INSERT INTO "blood_donation" ("id", "donors_id", "donated_time") VALUES
-(1,	27,	'2022-03-09 05:30:00'),
-(2,	2,	'2021-10-13 05:30:00'),
-(3,	3,	'2021-12-08 05:30:00');
 
 DROP TABLE IF EXISTS "blood_groups";
 DROP SEQUENCE IF EXISTS blood_groups_id_seq;
@@ -1261,73 +1257,63 @@ CREATE SEQUENCE district_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 32767 CACHE 1;
 
 CREATE TABLE "public"."district" (
     "id" smallint DEFAULT nextval('district_id_seq') NOT NULL,
-    "districtname" character(200) NOT NULL,
+    "districtname" character varying NOT NULL,
     "disrtict_code" integer NOT NULL,
     CONSTRAINT "district_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 INSERT INTO "district" ("id", "districtname", "disrtict_code") VALUES
-(1,	'KASARGOD                                                                                                                                                                                                ',	1),
-(2,	'KANNUR                                                                                                                                                                                                  ',	2),
-(3,	'WAYANAD                                                                                                                                                                                                 ',	3),
-(4,	'KOZHIKODE                                                                                                                                                                                               ',	4),
-(5,	'MALAPPURAM                                                                                                                                                                                              ',	5),
-(6,	'PALAKKAD                                                                                                                                                                                                ',	6),
-(7,	'THRISSUR                                                                                                                                                                                                ',	7),
-(8,	'ERNAKULAM                                                                                                                                                                                               ',	8),
-(9,	'IDUKKI                                                                                                                                                                                                  ',	9),
-(10,	'KOTTAYAM                                                                                                                                                                                                ',	10),
-(11,	'ALAPPUZHA                                                                                                                                                                                               ',	11),
-(12,	'PATHANAMTHITTA                                                                                                                                                                                          ',	12),
-(13,	'KOLLAM                                                                                                                                                                                                  ',	13),
-(14,	'THIRUVANANTHAPURAM                                                                                                                                                                                      ',	14);
+(1,	'KASARGOD',	1),
+(2,	'KANNUR',	2),
+(3,	'WAYANAD',	3),
+(4,	'KOZHIKODE',	4),
+(5,	'MALAPPURAM',	5),
+(6,	'PALAKKAD',	6),
+(7,	'THRISSUR',	7),
+(8,	'ERNAKULAM',	8),
+(9,	'IDUKKI',	9),
+(10,	'KOTTAYAM',	10),
+(11,	'ALAPPUZHA',	11),
+(12,	'PATHANAMTHITTA',	12),
+(13,	'KOLLAM',	13),
+(14,	'THIRUVANANTHAPURAM',	14);
 
 DROP TABLE IF EXISTS "donors";
 DROP SEQUENCE IF EXISTS donors_id_seq1;
-CREATE SEQUENCE donors_id_seq1 INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 6 CACHE 1;
+CREATE SEQUENCE donors_id_seq1 INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 685 CACHE 1;
 
 CREATE TABLE "public"."donors" (
     "id" integer DEFAULT nextval('donors_id_seq1') NOT NULL,
-    "name" character(255) NOT NULL,
+    "name" character varying NOT NULL,
     "bloodgroup" integer NOT NULL,
     "district" integer NOT NULL,
     "block_panchayaths" integer NOT NULL,
-    "email" character(255) NOT NULL,
-    "phone" character(255) NOT NULL,
+    "email" character varying NOT NULL,
+    "phone" character varying NOT NULL,
+    "o_id" integer,
     CONSTRAINT "donors_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
-INSERT INTO "donors" ("id", "name", "bloodgroup", "district", "block_panchayaths", "email", "phone") VALUES
-(3,	'Mrudul K S                                                                                                                                                                                                                                                     ',	1,	7,	12,	'mrudulcap@gmail.com                                                                                                                                                                                                                                            ',	'8989898989                                                                                                                                                                                                                                                     '),
-(6,	'Aswin                                                                                                                                                                                                                                                          ',	1,	5,	53,	'imru@gmail.com                                                                                                                                                                                                                                                 ',	'8989898989                                                                                                                                                                                                                                                     ');
+
+DROP TABLE IF EXISTS "organised_by";
+DROP SEQUENCE IF EXISTS "organised by_id_seq";
+CREATE SEQUENCE "organised by_id_seq" INCREMENT  MINVALUE  MAXVALUE  CACHE ;
+
+CREATE TABLE "public"."organised_by" (
+    "o_id" integer DEFAULT nextval('"organised by_id_seq"') NOT NULL,
+    "name" character varying(255) NOT NULL,
+    CONSTRAINT "organised by_pkey" PRIMARY KEY ("o_id")
+) WITH (oids = false);
+
 
 DROP TABLE IF EXISTS "session";
 CREATE TABLE "public"."session" (
     "token" character varying(64),
     "count" integer,
-    "expires" timestamptz
+    "expires" timestamptz,
+    "user_id" uuid NOT NULL
 ) WITH (oids = false);
 
-INSERT INTO "session" ("token", "count", "expires") VALUES
-('7M5XKneOBz4ep309NCE0UQLA',	75,	NULL),
-('kVWZntlqYXUF8V+91gQA0JBj',	15,	NULL),
-('mSze3h4faCyC+usB7dT6LX0A',	1,	NULL),
-('+K89kquo/R1lPj2D4500qZz4',	6,	NULL),
-('927HfScbkh5p9WzsoSlpPB2b',	124,	NULL),
-('WhCz98YaY7MJChs1hmo4Q5na',	1,	NULL),
-('PFjAbS8GWitoHGCPneR+iw+s',	43,	NULL),
-('rwClf60GG03rJkLqin3FUCIR',	19,	NULL),
-('BfN7YwQUQsbahDml9sD0+eNh',	11,	NULL),
-('hthLiR3aqJwh7tzeMmTSCLQb',	12,	NULL),
-('jRH3qZr3vItIYlkjcXFuXNdB',	80,	NULL),
-('6IIkXYwjZnqa/wV36JjsK/fN',	7,	NULL),
-('24FFKBB7DMFd8j235P3DC5tg',	2,	NULL),
-('s/aZ9ISF4i93jJZH931GCKox',	3,	NULL),
-('tAQDbDA91PIX+8SDdfd/QBY/',	74,	NULL),
-('47zl3SpbcjPg5TLcPkLOdB9S',	1,	NULL),
-('yxc1GzKyGUQS0byHmhlFgmlq',	1,	NULL),
-('4pwxy/wTIXij4VksCFBOBMxA',	1,	NULL),
-('ywTAwC6eOlwOYE28b7r1IFms',	41,	NULL);
 
 DROP TABLE IF EXISTS "users";
 CREATE TABLE "public"."users" (
@@ -1338,15 +1324,15 @@ CREATE TABLE "public"."users" (
     "password" character varying(255),
     "token" text,
     "updated_at" timestamp,
+    "o_id" integer,
     CONSTRAINT "users_email_unique" UNIQUE ("email"),
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
-INSERT INTO "users" ("id", "first_name", "last_name", "email", "password", "token", "updated_at") VALUES
-('3e41310f-5513-4980-8ae5-06aa1ed095ca',	'testing',	'Two',	'testingtwo@gmail.com',	'$argon2i$v=19$m=4096,t=3,p=1$tJpcFmspc8Pl0lK99JvXcA$x0AmZOOGkBruldq2qdGrP3KjPkgVleVCWW5uHNuIkEk',	NULL,	NULL),
-('6ac4f43f-91b1-4aac-94e0-bd293844849b',	'Admin',	'User',	'admin@example.com',	'$argon2i$v=19$m=4096,t=3,p=1$/ptEzOFBLXw2MgwWvsFZ+A$qBFfuOe9s956RuyjneiAd3oeyyhpMd7PcMLtLXpUCs8',	NULL,	NULL),
-('5ee5eee0-e13e-451d-aeca-f5a43a57e2ef',	'sadsadsa',	'adsad',	'mrudulkssadadadaspacha@gmail.com',	'mrudulkssadadadaspacha@gmail.com',	'XfcXF1cmahobhNcxyWEi1UDm',	'2022-03-17 12:50:28.847'),
-('d3290fe2-ba08-40a6-8922-b8cabd43411e',	'imru',	'k s',	'mrudulkspacha@gmail.com',	'Main123#',	'8HJyLik2WAgPBEjaATV4nkUI',	'2022-03-24 12:49:36.391'),
-('6b98d9bc-0658-42ec-a2a0-b579212021f6',	'mrudul',	'k s',	'mrudulcap@gmail.com',	'Main123#',	'p9x2X0XRgc65gE9sLZeMST20',	'2022-03-25 10:24:29.879');
+INSERT INTO "users" ("id", "first_name", "last_name", "email", "password", "token", "updated_at", "o_id") VALUES
+('6b98d9bc-0658-42ec-a2a0-b579212021f6',	'mrudul',	'k s',	'mrudulcap@gmail.com',	'Main123#',	'gR1HLUbjmrwbN0dvf6LsfESc',	'2022-04-12 10:41:05.487',	3),
+('6ac4f43f-91b1-4aac-94e0-bd293844849b',	'Admin',	'User',	'admin@example.com',	'Main123#',	'8E6gir9lQyt9C0HZ8IGrHfRQ',	'2022-04-12 11:18:49.733',	1),
+('a1e318c7-5aa3-45b2-bfbe-6df5f061f7dd',	'Testing',	'Three',	'testing3@gmail.com',	'Testing3',	'ZFVziVjFZQhaACK7ZW0j50ef',	'2022-04-11 12:03:21.53',	1),
+('c9badc35-86c0-45a4-92d5-f1fa9d3cfb5a',	'Testing',	'Four',	'testing4@gmail.com',	'Testing4',	NULL,	'2022-04-11 12:21:19.814',	2);
 
--- 2022-03-25 18:02:41.76691+05:30
+-- 2022-04-12 12:12:32.061138+05:30
