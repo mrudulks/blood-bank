@@ -103,7 +103,8 @@
         items: '',
         donorsCount: '',
         donors: '',
-        search:''
+        search:'',
+        oid:''
       }
     },
 
@@ -123,12 +124,17 @@
       const count = await api.totalUsers();
       this.donorsCount = await count.json();
 
-      const bloodDonors = await fetch('/api/donors')
+      const bloodDonors = await fetch('/api/donors/oid/'+this.oid)
       const jsonDate = await bloodDonors.json()
       this.donors = donorsList.fromArray(jsonDate)
-    }
+    },
+    localStorageFetch(){
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        this.oid = localUser[0].o_id
+      }
   },
   mounted(){
+    this.localStorageFetch(),
     this.dataFetch()
   }
   }

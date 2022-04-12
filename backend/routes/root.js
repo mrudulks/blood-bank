@@ -56,7 +56,6 @@ var out = {};
 var data = await knex('session').where({
   'token':session
 }).select('count')
-debugger;
 return data[0].count || 1
 }
 

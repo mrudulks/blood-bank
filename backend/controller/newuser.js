@@ -39,6 +39,7 @@ async function adminUserRegister(user) {
                 email: user.email,
                 password: user.password,
                 updated_at: date,
+                o_id:user.o_id
             })
 }
 

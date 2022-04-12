@@ -44,7 +44,11 @@
     methods: {
       async dataFetch() {
         var item = await fetch('/api/user')
-
+        if (item.status == 403) {
+          this.$router.push({
+            name: 'login'
+          })
+        }
         if (item.status == 500) {
           this.$router.push({
             name: 'login'

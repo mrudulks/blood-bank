@@ -98,6 +98,7 @@
           details:'',
           message:''
         },
+        oid:'',
         data:{}
       }
     },
@@ -140,7 +141,7 @@
           body: '{"name":"' + this.register.name + '","bloodgroup":"' + this.register.blood_group +
             '","district":"' + this.register.district + '","phone":"' + this.register.mobileno +
             '","block_panchayaths":"' + this.register.blockPanchayath + '","age":"' + this.register.age +
-            '","email":"' + this.register.email + '"}'
+            '","email":"' + this.register.email + '","o_id":"'+this.oid+'"}'
         };
 
         fetch('/api/donors/register', options)
@@ -179,7 +180,14 @@
            
          }
        })
+      },
+      localStorageFetch(){
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        this.oid = localUser[0].o_id
       }
+    },
+    mounted(){
+      this.localStorageFetch()
     }
   }
 

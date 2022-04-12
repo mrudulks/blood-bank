@@ -1,6 +1,7 @@
 const {
   knex
-} = require('../database')
+} = require('../database');
+
 
 function getDistrict(id) {
   if (id == null) {
@@ -75,9 +76,10 @@ function getDonorBySearch(name){
 }
 
 
-function getAllDonorsList() {
+function getAllDonorsList(oid) {
   return knex.select('*').from('donors')
   .leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+  .where('o_id',oid)
   // .leftJoin('blood_donation', 'donors.id', 'blood_donation.donors_id')
 }
 
@@ -149,6 +151,15 @@ function getDonerByFilter(filter){
   }
 }
 
+function getDonorsOid(oid){
+  const subquery = knex.select('donors_id').from('blood_donation')
+     .whereRaw('donated_time > ? - ?::INTERVAL', [knex.fn.now(), '90 day']);
+     return knex.select('*').from('donors')
+     .whereNotIn('id', subquery)
+     .leftJoin('blood_groups', 'donors.bloodgroup', 'blood_groups.bid')
+     .where('o_id',oid)
+}
+
 
 // Blood Groups 
 function getBloodGroups(id) {
@@ -167,7 +178,8 @@ async function registerNew(formData) {
     bloodgroup: formData.bloodgroup,
     district: formData.district,
     block_panchayaths: formData.block_panchayaths,
-    email: formData.email
+    email: formData.email,
+    o_id: formData.o_id
   })
 
 
@@ -205,6 +217,33 @@ function dateParser(date){
 
 
 
+
+// Organization
+
+function getOrganization(id){
+  if(id){
+    return knex.select('*').table('organised_by').where('o_id',id)
+  }
+  else{
+    return knex.select('*').table('organised_by')
+  }
+}
+
+function newOrganization(items){
+  try{
+    return knex('organised_by').insert({
+      name: items.name
+    })
+  }
+  catch(error){
+    console.log(error)
+  }
+  
+}
+
+// Function Exports
+
+
 exports.registerNew = registerNew;
 exports.updateDonor = updateDonor;
 exports.deleteDonor = deleteDonor;
@@ -224,9 +263,12 @@ exports.getBlockPanchayathsFilter = getBlockPanchayathsFilter;
 
 exports.getDonerById = getDonerById;
 exports.getDonerByFilter = getDonerByFilter;
-
+exports.getDonorsOid = getDonorsOid;
 exports.getBloodGroups = getBloodGroups;
 
 exports.getDonorsList = getDonorsList;
 exports.getAllDonorsList = getAllDonorsList;
 exports.getDonorBySearch = getDonorBySearch;
+
+exports.getOrganization = getOrganization;
+exports.newOrganization = newOrganization;

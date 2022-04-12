@@ -30,8 +30,7 @@ async function csvUpload(request,reply){
 
         //Blocks
     let blocks = await getBlock(newBlock);
-    var newBlocks = mapBlocks(blocks)
-        debugger;
+    var newBlocks = mapBlocks(blocks);
     //Blood Groups
     let bloodGroup = await getBloodGroup(newBlood)
     var bloodMap = mapBlood(bloodGroup)

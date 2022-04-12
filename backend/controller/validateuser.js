@@ -16,7 +16,7 @@ function parseCookie(cookieString) {
 
 
 async function validateUser(req,reply){
-    if (req.headers) {debugger;
+    if (req.headers) {
         if(!req.headers.cookie){
             reply
                 .code(403)

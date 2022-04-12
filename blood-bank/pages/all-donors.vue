@@ -119,14 +119,13 @@
         donorsCount: '',
         donors: '',
         isEdit: false,
+        oid:''
       }
     },
     methods: {
       updateInput(e) {
         this.isEdit = false;
       },
-
-
       async deleteUser(id) {
         console.log(id)
         var data = await fetch('/api/donors/delete/' + id)
@@ -134,7 +133,6 @@
 
         this.dataFetch()
       },
-
       async dataFetch() {
         const data = await fetch('/api/')
         this.items = data.json();
@@ -142,12 +140,17 @@
         const count = await fetch('/api/donors/count')
         this.donorsCount = await count.json();
 
-        const bloodDonors = await fetch('/api/donors/all')
+        const bloodDonors = await fetch('/api/donors/all/'+this.oid)
         const jsonDate = await bloodDonors.json()
         this.donors = donorsList.fromArray(jsonDate)
+      },
+      localStorageFetch(){
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        this.oid = localUser[0].o_id
       }
     },
     mounted(){
+      this.localStorageFetch(),
       this.dataFetch()
     }
   }

@@ -1,5 +1,5 @@
 const BASE_URL = "/api";
-const FRONT_URL = "http://localhost:3000"
+const FRONT_URL = "http://localhost:8000"
 async function myFetch(url, options){
     const res =  await fetch( url, options)
     if(res.status == 403){
@@ -49,11 +49,16 @@ function getBloodGroups(id,ser){
     return myFetch(BASE_URL+'/groups')
 }
 
+function getOrganization(){
+    return myFetch(BASE_URL+'/organization')
+}
+
 export default{
     getDistrict,
     getTaluk,
     getDonors,
     getBloodGroups,
     getAllDonors,
-    totalUsers
+    totalUsers,
+    getOrganization
 }

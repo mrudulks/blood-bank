@@ -1,4 +1,4 @@
-const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsList , updateDonor,getDonorBySearch,deleteDonor} = require('../../controller/model')
+const { getDonerById, getDonerByFilter, registerNew,getDonorsList ,getAllDonorsList , updateDonor,getDonorBySearch,deleteDonor, getDonorsOid} = require('../../controller/model')
 
 const { validateUser } = require('../../controller/validateuser')
 
@@ -42,12 +42,12 @@ module.exports = async function (fastify, opts,done){
        
     })
 
-    fastify.get('/all', async (req,reply)=>{
+    fastify.get('/all/:oid', async (req,reply)=>{
         var validUser = await validateUser(req,reply)
             if(!validUser){
                 return 
             }
-        return await getAllDonorsList(req.query)
+        return await getAllDonorsList(req.params.oid)
     })
 
     fastify.get('/count', async (req, reply) => {
@@ -73,6 +73,14 @@ module.exports = async function (fastify, opts,done){
                 return 
             }
         return deleteDonor(req.params.id) 
+    })
+
+    fastify.get('/oid/:oid',async(req, reply)=>{
+        // var validUser = await validateUser(req,reply)
+        //     if(!validUser){
+        //         return 
+        //     }
+        return getDonorsOid(req.params.oid) 
     })
 
     // Upload donors file 

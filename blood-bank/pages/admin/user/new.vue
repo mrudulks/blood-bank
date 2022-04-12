@@ -27,6 +27,14 @@
             <input type="password" id="password" class="form-control" v-model="user.password">
           </div>
 
+           <div class="col-md-6">
+            <label for="organisation">Organization</label>
+            <select class="form-control" v-model="user.organisation">
+              <option>select organization</option>
+              <option v-for="items in organization" :value="items.o_id" :key="items.name">{{items.name}}</option>
+            </select>
+          </div>
+
         </div>
         <div class="col-md-12 text-center">
           <button class="btn primary-btn  mb-3" type="submit">Login</button>
@@ -36,6 +44,7 @@
   </div>
 </template>
 <script>
+import api from '~/lib/js/api';
  
   //   import api from '~/lib/js/api'
   export default {
@@ -44,7 +53,8 @@
         user: {},
         userResponse: '',
         modelValue:'',
-        errorMsg:''
+        errorMsg:'',
+        organization:[]
       }
     },
     methods: {
@@ -55,15 +65,23 @@
             'content-type': 'application/json'
           },
           body: '{"first_name":"' + this.user.firstName + '","last_name":"' + this.user.secondName +
-            '","email":"' + this.user.email + '","password":"' + this.user.password + '"}'
+            '","email":"' + this.user.email + '","password":"' + this.user.password + '","o_id":"'+this.user.organisation+'"}'
         };
 
         const response = await fetch('/api/user', options)
         if(response.status == 403){
           this.errorMsg = "User Already Exists"
         }
-      }
+      },
+      async organizationFetch(){
+      const data = await api.getOrganization();
+      this.organization = await data.json()
     }
+    },
+    mounted(){
+      this.organizationFetch()
+    }
+    
   }
 
 </script>
