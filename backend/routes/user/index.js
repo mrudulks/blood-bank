@@ -42,8 +42,11 @@ function storeUserSession(id, tokenId) {
         }, ['id', 'token', 'updated_at'])
 }
 
-function sessionTable(id, token){
-    return knex('session').insert({user_id:id,token:token})
+function sessionData(userid,sessionid,userdata){
+    return knex('session').insert({
+        user_id:userid,
+        token:sessionid,
+    })
 }
 
 function parseCookie(cookieString) {
@@ -117,18 +120,18 @@ module.exports = async function (fastify, opts, done) {
     })
 
     fastify.post('/auth', async (req, reply) => {
-        var data = await userAuth(req.body)
-        debugger;
+        var data = await userAuth(req.body,reply)
+        var userData = data[0]
         console.log(data[0].password)
         let userId = data[0].id;
         const loginSessionId = genRandomToken();
         console.log(loginSessionId)
         if (data[0].password == req.body.password) {
-            const sessiontab = sessionTable(userId, loginSessionId)
             reply
                 .header('set-cookie', `usersession=${loginSessionId};path=/api`)
                 .send(data);
         }
+        await sessionData(userId, loginSessionId, userData);
         await storeUserSession(userId, loginSessionId);
         return "Login Sucess"
     })
@@ -145,7 +148,6 @@ module.exports = async function (fastify, opts, done) {
 
     fastify.get('/', async (req, reply) => {
         console.log(req.headers);
-        debugger;
         if (req.headers) {
             if (!req.headers.cookie) {
                 reply
@@ -208,13 +210,41 @@ module.exports = async function (fastify, opts, done) {
     })
 
 
-    fastify.get('/cookie', async (req, reply) => {
-
+    fastify.get('/new', async (req, reply) => {
+        console.log(req.headers)
+        const cookieString = req.headers.cookie;
+        var cookiestring = parseCookie(cookieString)
+        var usersession = cookiestring.usersession;
+        const session = await sessionFetch(usersession);
+        const userId = session[0].user_id;
+        const userData = await userDataFetch(userId)
+        console.log(userData)
+        return userData
     })
 
+    fastify.post('/logout',async (req,res) => {
+        const cookieString = req.headers.cookie;
+        var cookiestring = parseCookie(cookieString)
+        var usersession = cookiestring.usersession;
+        const session = await sessionFetch(usersession);
+        if(session.length == 1){
+            const del = sessionDelete(usersession)
+            return del
+        }
+        return "No Way"
+    })
     done()
 }
 
+function sessionDelete(user){
+    return knex('session').where('token', user).del() 
+}
+function sessionFetch(usersession){
+    return knex('session').where('token',usersession)
+}
+function userDataFetch(userId){
+    return knex('users').select('first_name','last_name','email','o_id').where('id',userId)
+}
 function validateRequest(request){
     const schema = Joi.object({
         first_name: Joi.string()

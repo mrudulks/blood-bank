@@ -51,9 +51,6 @@
             const data = await response.json()
             this.user = data
             if(this.user.length != 0){
-              // localStorage.setItem("users", JSON.stringify(users));
-              localStorage.setItem("user",JSON.stringify(this.user))
-              // console.log(data);
                  this.$router.push({
                 name: 'index'
               })

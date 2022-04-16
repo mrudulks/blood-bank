@@ -19,6 +19,7 @@
     "fastify": "^3.0.0",
     "fastify-autoload": "^3.11.0",
     "fastify-cli": "^2.15.0",
+    "fastify-cookie": "^5.6.0",
     "fastify-cors": "^6.0.3",
     "fastify-multer": "^2.0.2",
     "fastify-plugin": "^3.0.0",

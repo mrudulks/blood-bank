@@ -22,7 +22,7 @@ function getUsers(id) {
   }
 }
 
-function userAuth(auth) {
+function userAuth(auth,reply) {
   var obj = {};
   var newArray = [];
   if (auth != null) {
@@ -31,7 +31,12 @@ function userAuth(auth) {
       obj[keyName[i]] = auth[keyName[i]]
     }
     newArray.push(obj);
-    return knex('users').where(newArray[0])
+    try{
+      return knex('users').where(newArray[0])
+    }
+    catch(error){
+      reply.send(error)
+    }
 
   }
 }

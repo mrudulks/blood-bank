@@ -144,14 +144,12 @@
             '","email":"' + this.register.email + '","o_id":"'+this.oid+'"}'
         };
 
-        fetch('/api/donors/register', options)
-          .then(response => {
-            if (response.status == 200) {
-              this.$router.push({
-                name: 'index'
-              })
-            }
+        const res = await fetch('/api/donors/register', options)
+        if(res.status == 200){
+          this.$router.push({
+            name:'admin-user-users'
           })
+        }
         // .then(response => console.log(response))
         // .catch(err => console.error(err));
       },
@@ -181,9 +179,10 @@
          }
        })
       },
-      localStorageFetch(){
-        const localUser = JSON.parse(localStorage.getItem('user'));
-        this.oid = localUser[0].o_id
+      async localStorageFetch(){
+        const localUser = await fetch('/api/user/new')
+    const userData = await localUser.json()
+    this.oid = userData[0].o_id
       }
     },
     mounted(){

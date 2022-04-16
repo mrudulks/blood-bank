@@ -22,10 +22,11 @@
           <nuxt-link to="/register">Add Donor</nuxt-link>
         </li>
       </ul>
+      <button class="btn btn-dark" @click="logoutApp()">Logout</button>
     </aside>
     <div class="main">
       <header class="main-header">
-        <p class="text-capitalize font-weight-bold text-capitalize text-secondary mb-0 mr-2" v-for="items in user" :key="items">{{items.first_name +' '+ items.last_name}}</p>
+        <p class="text-capitalize font-weight-bold text-capitalize text-secondary mb-0 mr-2" v-for="items in user" :key="items.id">{{items.first_name +' '+ items.last_name}}</p>
         <img src="../lib/images/menu.svg" alt="" class="menu-icon" @click="open()">
       </header>
       <Nuxt />
@@ -43,7 +44,7 @@
     },
     methods: {
       async dataFetch() {
-        var item = await fetch('/api/user')
+        var item = await fetch('/api/user/new')
         if (item.status == 403) {
           this.$router.push({
             name: 'login'
@@ -68,6 +69,13 @@
       closeNav(){
          var sideBar = document.getElementById("sideBar")
           sideBar.classList.remove("open");
+      },
+      async logoutApp(){
+        console.log("Hiii Imru \n")
+        const logout = await fetch('/api/user/logout',{
+          method:'POST',
+          body:'{"name":"Logout"}'
+        })
       }
     },
 
@@ -86,5 +94,14 @@
 .open{
   width: calc(100% - 2.4rem);
   opacity: 1;
+}
+aside{
+  display: flex;
+  flex-direction: column;
+
+}
+aside button{
+  margin-top: auto;
+  margin-bottom: 30px;
 }
 </style>
