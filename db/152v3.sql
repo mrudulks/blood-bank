@@ -1,7 +1,5 @@
 -- Adminer 4.8.1 PostgreSQL 13.4 dump
 
-DROP TABLE IF EXISTS "organised_by";
-DROP SEQUENCE IF EXISTS "organised by_id_seq";
 CREATE SEQUENCE "organised by_id_seq" INCREMENT  MINVALUE  MAXVALUE  CACHE ;
 
 CREATE TABLE "public"."organised_by" (
@@ -17,4 +15,4 @@ INSERT INTO "organised_by" ("o_id", "name") VALUES
 (4,	'Testing 4'),
 (9,	'aSA SDSADASD');
 
--- 2022-04-16 10:51:37.930274+05:30
+-- 2022-04-16 10:57:58.176622+05:30
