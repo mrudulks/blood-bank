@@ -22,6 +22,7 @@
           <nuxt-link to="/register">Add Donor</nuxt-link>
         </li>
       </ul>
+      <button class="btn btn-dark" @click="logoutApp()">Logout</button>
     </aside>
     <div class="main">
       <header class="main-header">
@@ -68,6 +69,13 @@
       closeNav(){
          var sideBar = document.getElementById("sideBar")
           sideBar.classList.remove("open");
+      },
+      async logoutApp(){
+        console.log("Hiii Imru \n")
+        const logout = await fetch('/api/user/logout',{
+          method:'POST',
+          body:'{"name":"Logout"}'
+        })
       }
     },
 
@@ -86,5 +94,14 @@
 .open{
   width: calc(100% - 2.4rem);
   opacity: 1;
+}
+aside{
+  display: flex;
+  flex-direction: column;
+
+}
+aside button{
+  margin-top: auto;
+  margin-bottom: 30px;
 }
 </style>

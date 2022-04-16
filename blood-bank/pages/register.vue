@@ -144,14 +144,12 @@
             '","email":"' + this.register.email + '","o_id":"'+this.oid+'"}'
         };
 
-        fetch('/api/donors/register', options)
-          .then(response => {
-            if (response.status == 200) {
-              this.$router.push({
-                name: 'index'
-              })
-            }
+        const res = await fetch('/api/donors/register', options)
+        if(res.status == 200){
+          this.$router.push({
+            name:'admin-user-users'
           })
+        }
         // .then(response => console.log(response))
         // .catch(err => console.error(err));
       },

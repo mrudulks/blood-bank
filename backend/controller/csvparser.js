@@ -9,7 +9,8 @@ let results = []
 let newDist = []
 let finalRes = []
 let finalResult ;
-async function csvUpload(request,reply){
+async function csvUpload(request,reply,oid){
+  var o_id = oid
   var newBlock  = [];
   var newBlood = [];
     fs.createReadStream(request.file.destination+request.file.filename)
@@ -35,7 +36,7 @@ async function csvUpload(request,reply){
     let bloodGroup = await getBloodGroup(newBlood)
     var bloodMap = mapBlood(bloodGroup)
 
-    finalRes = mapObject(districtMap, newBlocks,bloodMap);
+    finalRes = mapObject(districtMap, newBlocks,bloodMap,o_id);
     results = [];
     return await fileInsert(finalRes,reply);
     });
@@ -84,12 +85,13 @@ function mapBlood(bloodGroup){
 
 
 //Insertion
-function mapObject(districtMap, newBlocks, bloodMap) {
+function mapObject(districtMap, newBlocks, bloodMap,oid) {
     var newData = results.map(v => {
       var str = v;
       str.district = districtMap[v.district.toUpperCase()];
       str.block_panchayaths = newBlocks[v.block_panchayaths];
       str.bloodgroup = bloodMap[v.bloodgroup];
+      str.o_id = oid;
       return v
     })
     console.log(newData)

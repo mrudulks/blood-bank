@@ -120,7 +120,7 @@ module.exports = async function (fastify, opts, done) {
     })
 
     fastify.post('/auth', async (req, reply) => {
-        var data = await userAuth(req.body)
+        var data = await userAuth(req.body,reply)
         var userData = data[0]
         console.log(data[0].password)
         let userId = data[0].id;
@@ -222,7 +222,22 @@ module.exports = async function (fastify, opts, done) {
         return userData
     })
 
+    fastify.post('/logout',async (req,res) => {
+        const cookieString = req.headers.cookie;
+        var cookiestring = parseCookie(cookieString)
+        var usersession = cookiestring.usersession;
+        const session = await sessionFetch(usersession);
+        if(session.length == 1){
+            const del = sessionDelete(usersession)
+            return del
+        }
+        return "No Way"
+    })
     done()
+}
+
+function sessionDelete(user){
+    return knex('session').where('token', user).del() 
 }
 function sessionFetch(usersession){
     return knex('session').where('token',usersession)
