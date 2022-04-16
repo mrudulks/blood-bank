@@ -1,7 +1,5 @@
 -- Adminer 4.8.1 PostgreSQL 13.4 dump
 
-DROP TABLE IF EXISTS "block_panchayaths";
-DROP SEQUENCE IF EXISTS block_panchayaths_id_seq;
 CREATE SEQUENCE block_panchayaths_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."block_panchayaths" (
@@ -1217,8 +1215,6 @@ INSERT INTO "block_panchayaths" ("id", "name", "district", "created_by", "update
 (1418,	'KANNUR',	2,	NULL,	NULL,	'2021-11-27 11:04:07.843857+05:30',	'2021-11-27 11:04:07.843857+05:30'),
 (1419,	'KASARGOD',	1,	NULL,	NULL,	'2021-11-27 11:04:07.843857+05:30',	'2021-11-27 11:04:07.843857+05:30');
 
-DROP TABLE IF EXISTS "blood_donation";
-DROP SEQUENCE IF EXISTS blood_donation_id_seq;
 CREATE SEQUENCE blood_donation_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 4 CACHE 1;
 
 CREATE TABLE "public"."blood_donation" (
@@ -1228,9 +1224,12 @@ CREATE TABLE "public"."blood_donation" (
     CONSTRAINT "blood_donation_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
+INSERT INTO "blood_donation" ("id", "donors_id", "donated_time") VALUES
+(1,	27,	'2022-03-09 05:30:00'),
+(2,	2,	'2021-10-13 05:30:00'),
+(3,	3,	'2021-12-08 05:30:00'),
+(4,	683,	'2022-02-09 05:30:00');
 
-DROP TABLE IF EXISTS "blood_groups";
-DROP SEQUENCE IF EXISTS blood_groups_id_seq;
 CREATE SEQUENCE blood_groups_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."blood_groups" (
@@ -1251,8 +1250,6 @@ INSERT INTO "blood_groups" ("bid", "blood_group", "blood_id", "blood_icon") VALU
 (7,	'AB Positive',	'ab_positive',	'AB+'),
 (8,	'AB Negative',	'ab_negative',	'AB+');
 
-DROP TABLE IF EXISTS "district";
-DROP SEQUENCE IF EXISTS district_id_seq;
 CREATE SEQUENCE district_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 32767 CACHE 1;
 
 CREATE TABLE "public"."district" (
@@ -1278,9 +1275,7 @@ INSERT INTO "district" ("id", "districtname", "disrtict_code") VALUES
 (13,	'KOLLAM',	13),
 (14,	'THIRUVANANTHAPURAM',	14);
 
-DROP TABLE IF EXISTS "donors";
-DROP SEQUENCE IF EXISTS donors_id_seq1;
-CREATE SEQUENCE donors_id_seq1 INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 685 CACHE 1;
+CREATE SEQUENCE donors_id_seq1 INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 728 CACHE 1;
 
 CREATE TABLE "public"."donors" (
     "id" integer DEFAULT nextval('donors_id_seq1') NOT NULL,
@@ -1294,9 +1289,21 @@ CREATE TABLE "public"."donors" (
     CONSTRAINT "donors_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
+INSERT INTO "donors" ("id", "name", "bloodgroup", "district", "block_panchayaths", "email", "phone", "o_id") VALUES
+(671,	'Saabu',	6,	13,	12,	'bheem@gmail.com',	'8695565655',	2),
+(673,	'Bhavani',	3,	11,	12,	'bheem@gmail.com',	'8695565655',	3),
+(674,	'Bheemla',	7,	4,	12,	'bheem@gmail.com',	'8695565655',	1),
+(669,	'Anya Charlotte',	1,	6,	12,	'bheem@gmail.com',	'8695565655',	2),
+(683,	'mithramfamily',	6,	5,	78,	'sooraj123@gmail.com',	'534543543543',	2),
+(686,	'Ramkumar',	3,	5,	56,	'imru@gmail.com',	'35345353',	3),
+(722,	'Bheemala',	3,	7,	12,	'bheem@gmail.com',	'8695565655',	3),
+(723,	'Anya Charlotte',	1,	6,	12,	'bheem@gmail.com',	'8695565655',	3),
+(724,	'Rekha ',	3,	1,	12,	'bheem@gmail.com',	'8695565655',	3),
+(725,	'Saabu',	6,	13,	12,	'bheem@gmail.com',	'8695565655',	3),
+(726,	'Baabu',	3,	9,	12,	'bheem@gmail.com',	'8695565655',	3),
+(727,	'Bhavani',	3,	11,	12,	'bheem@gmail.com',	'8695565655',	3),
+(728,	'Bheemla',	7,	4,	12,	'bheem@gmail.com',	'8695565655',	3);
 
-DROP TABLE IF EXISTS "organised_by";
-DROP SEQUENCE IF EXISTS "organised by_id_seq";
 CREATE SEQUENCE "organised by_id_seq" INCREMENT  MINVALUE  MAXVALUE  CACHE ;
 
 CREATE TABLE "public"."organised_by" (
@@ -1305,17 +1312,35 @@ CREATE TABLE "public"."organised_by" (
     CONSTRAINT "organised by_pkey" PRIMARY KEY ("o_id")
 ) WITH (oids = false);
 
+INSERT INTO "organised_by" ("o_id", "name") VALUES
+(1,	'testing 1'),
+(2,	'testing 2'),
+(3,	'testing 3'),
+(4,	'Testing 4'),
+(9,	'aSA SDSADASD');
 
-DROP TABLE IF EXISTS "session";
 CREATE TABLE "public"."session" (
     "token" character varying(64),
-    "count" integer,
-    "expires" timestamptz,
-    "user_id" uuid NOT NULL
+    "user_id" uuid NOT NULL,
+    "user_data" character varying
 ) WITH (oids = false);
 
+INSERT INTO "session" ("token", "user_id", "user_data") VALUES
+('i7w53yW9d/YHQiCLOmuwsskV',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('akzaXKwWbRZoJIZaRba27NZk',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('QvXiB2PVG8UeBvmXpDsSBJnT',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('hb7GoNucqk2B4Ex4N2MrSGbI',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('8+bor7UnrvVKgiakLJ/SvgUi',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('e04hbmpkYY8woNHChqEptDlf',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('ZAo6Jccnc2WM4CeQMsIHVdv4',	'a1e318c7-5aa3-45b2-bfbe-6df5f061f7dd',	NULL),
+('YqjnXbDtsogaUWYmb1BTxfNq',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('Av5+CPTtl82+I2CJia4mYtj+',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('6G/1spa8gR3HiUK3DyaYP1NW',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('Rp7zVGc3tUL24dhY4g2jjvRh',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('Zq48MkWVeulGTigsx+SvMhgh',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('+Uu472JzQuirctxll0ATYsUQ',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL),
+('t+/9RRYa+YJ+vKM5fe+hamQu',	'6ac4f43f-91b1-4aac-94e0-bd293844849b',	NULL);
 
-DROP TABLE IF EXISTS "users";
 CREATE TABLE "public"."users" (
     "id" uuid NOT NULL,
     "first_name" character varying(50),
@@ -1330,9 +1355,10 @@ CREATE TABLE "public"."users" (
 ) WITH (oids = false);
 
 INSERT INTO "users" ("id", "first_name", "last_name", "email", "password", "token", "updated_at", "o_id") VALUES
-('6b98d9bc-0658-42ec-a2a0-b579212021f6',	'mrudul',	'k s',	'mrudulcap@gmail.com',	'Main123#',	'gR1HLUbjmrwbN0dvf6LsfESc',	'2022-04-12 10:41:05.487',	3),
-('6ac4f43f-91b1-4aac-94e0-bd293844849b',	'Admin',	'User',	'admin@example.com',	'Main123#',	'8E6gir9lQyt9C0HZ8IGrHfRQ',	'2022-04-12 11:18:49.733',	1),
-('a1e318c7-5aa3-45b2-bfbe-6df5f061f7dd',	'Testing',	'Three',	'testing3@gmail.com',	'Testing3',	'ZFVziVjFZQhaACK7ZW0j50ef',	'2022-04-11 12:03:21.53',	1),
+('a1e318c7-5aa3-45b2-bfbe-6df5f061f7dd',	'Testing',	'Three',	'testing3@gmail.com',	'Testing3',	'ZAo6Jccnc2WM4CeQMsIHVdv4',	'2022-04-13 14:57:38.572',	3),
+('6ac4f43f-91b1-4aac-94e0-bd293844849b',	'Admin',	'User',	'admin@example.com',	'Main123#',	'i7w53yW9d/YHQiCLOmuwsskV',	'2022-04-16 10:48:42.521',	1),
 ('c9badc35-86c0-45a4-92d5-f1fa9d3cfb5a',	'Testing',	'Four',	'testing4@gmail.com',	'Testing4',	NULL,	'2022-04-11 12:21:19.814',	2);
 
--- 2022-04-12 12:12:32.061138+05:30
+ALTER TABLE ONLY "public"."session" ADD CONSTRAINT "session_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE NOT DEFERRABLE;
+
+-- 2022-04-16 11:06:42.777799+05:30
