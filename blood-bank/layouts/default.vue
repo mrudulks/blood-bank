@@ -36,6 +36,7 @@
 
 </template>
 <script>
+import api from '~/lib/js/api';
   export default {
     data() {
       return {
@@ -44,6 +45,8 @@
     },
     methods: {
       async dataFetch() {
+        // const route = this.$router.
+        console.log("My Route",this.$route.name)
         var item = await fetch('/api/user/new')
         if (item.status == 403) {
           this.$router.push({
@@ -71,11 +74,12 @@
           sideBar.classList.remove("open");
       },
       async logoutApp(){
-        console.log("Hiii Imru \n")
         const logout = await fetch('/api/user/logout',{
           method:'POST',
           body:'{"name":"Logout"}'
         })
+
+      this.dataFetch();
       }
     },
 

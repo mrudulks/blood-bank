@@ -101,6 +101,7 @@
   import BHeader from '~/components/BHeader.vue'
   import api from '~/lib/js/api'
   export default {
+    transition: 'home',
     components: {
       BHeader,
     },
@@ -164,4 +165,6 @@ td span.inactive {
     font-size: .9rem;
     font-weight: 500;
 }
+.home-enter-active, .home-leave-active { transition: opacity .5s; }
+  .home-enter, .home-leave-active { opacity: 0; }
 </style>

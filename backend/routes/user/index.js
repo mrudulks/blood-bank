@@ -211,7 +211,11 @@ module.exports = async function (fastify, opts, done) {
 
 
     fastify.get('/new', async (req, reply) => {
-        console.log(req.headers)
+        var validUser = await validateUser(req, reply)
+        if (!validUser) {
+            return
+        }
+        // console.log(req.headers)
         const cookieString = req.headers.cookie;
         var cookiestring = parseCookie(cookieString)
         var usersession = cookiestring.usersession;

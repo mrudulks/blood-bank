@@ -53,6 +53,15 @@ function getOrganization(){
     return myFetch(BASE_URL+'/organization')
 }
 
+function getAllDonorsOid(oid){
+    return myFetch(BASE_URL+'/donors/oid/'+oid)
+}
+
+function getUser(){
+    return myFetch(BASE_URL+'/user/new')
+}
+
+
 export default{
     getDistrict,
     getTaluk,
@@ -60,5 +69,7 @@ export default{
     getBloodGroups,
     getAllDonors,
     totalUsers,
-    getOrganization
+    getOrganization,
+    getAllDonorsOid,
+    getUser
 }

@@ -97,6 +97,7 @@
   import api from '~/lib/js/api';
   import {donorsList} from '~/lib/js/model';
   export default {
+    transition: 'home',
     name: 'IndexPage',
     data() {
       return {
@@ -108,7 +109,7 @@
       }
     },
   async fetch(){
-    const localUser = await fetch('/api/user/new')
+    const localUser = await api.getUser()
     const userData = await localUser.json()
     this.oid = userData[0].o_id
 
@@ -129,7 +130,7 @@
       const count = await api.totalUsers();
       this.donorsCount = await count.json();
 
-      const bloodDonors = await fetch('/api/donors/oid/'+this.oid)
+      const bloodDonors = await api.getAllDonorsOid(this.oid)
       const jsonDate = await bloodDonors.json()
       this.donors = donorsList.fromArray(jsonDate)
     },
@@ -179,4 +180,6 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+.home-enter-active, .home-leave-active { transition: opacity .5s; }
+  .home-enter, .home-leave-active { opacity: 0; }
 </style>

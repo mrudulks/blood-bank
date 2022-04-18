@@ -83,6 +83,7 @@
   import axios from 'axios'
   import api from '~/lib/js/api'
   export default {
+    transition: 'home',
     components: {
       BHeader,
     },
@@ -207,5 +208,6 @@
   .input-file {
     display: block;
   }
-
+  .home-enter-active, .home-leave-active { transition: opacity .5s; }
+  .home-enter, .home-leave-active { opacity: 0; }
 </style>

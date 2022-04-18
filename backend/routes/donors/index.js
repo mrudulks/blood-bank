@@ -79,10 +79,10 @@ module.exports = async function (fastify, opts,done){
     })
 
     fastify.get('/oid/:oid',async(req, reply)=>{
-        // var validUser = await validateUser(req,reply)
-        //     if(!validUser){
-        //         return 
-        //     }
+        var validUser = await validateUser(req,reply)
+            if(!validUser){
+                return 
+            }
         return getDonorsOid(req.params.oid) 
     })
 

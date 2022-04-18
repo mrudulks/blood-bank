@@ -10,7 +10,7 @@
             <p class="text-danger mb-3" v-if="errorMsg">{{errorMsg}}</p>
             <form action @submit.prevent="loginUser" id="loginForm">
               <input type="text" class="form-control" placeholder="Username or Email" v-model="form.username">
-              <input type="password" class="form-control" placeholder="Password" v-model="form.password">
+              <input type="password" class="form-control" placeholder="Password" v-model="form.password" autocomplete="off">
               <div class="col-md-12 text-center">
                 <button class="btn btn-primary  mb-3" type="submit">Login</button>
               </div>
