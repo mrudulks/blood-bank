@@ -45,7 +45,7 @@ function getBloodGroups(id,ser){
     if(id != null){
         return myFetch(BASE_URL+'/groups/'+id)
     }
-    console.log("My Blood gp",ser)
+    // console.log("My Blood gp",ser)
     return myFetch(BASE_URL+'/groups')
 }
 

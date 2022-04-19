@@ -24,7 +24,7 @@
 
           <div class="col-md-6">
             <label for="password">Password</label>
-            <input type="password" id="password" class="form-control" v-model="user.password">
+            <input type="password" id="password" class="form-control" v-model="user.password" autocomplete="off">
           </div>
 
            <div class="col-md-6">

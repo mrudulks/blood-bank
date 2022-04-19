@@ -148,7 +148,7 @@
         const res = await fetch('/api/donors/register', options)
         if(res.status == 200){
           this.$router.push({
-            name:'admin-user-users'
+            name:'index'
           })
         }
         // .then(response => console.log(response))

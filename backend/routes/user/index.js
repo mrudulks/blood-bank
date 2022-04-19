@@ -215,15 +215,18 @@ module.exports = async function (fastify, opts, done) {
         if (!validUser) {
             return
         }
+        
         // console.log(req.headers)
         const cookieString = req.headers.cookie;
         var cookiestring = parseCookie(cookieString)
         var usersession = cookiestring.usersession;
         const session = await sessionFetch(usersession);
+        const tokenVarify = tokenExistCheck(session,req,reply)
         const userId = session[0].user_id;
         const userData = await userDataFetch(userId)
         console.log(userData)
         return userData
+        
     })
 
     fastify.post('/logout',async (req,res) => {
@@ -238,6 +241,16 @@ module.exports = async function (fastify, opts, done) {
         return "No Way"
     })
     done()
+}
+
+function tokenExistCheck(usersession,req,reply){
+    if(usersession == ''){
+        reply
+        .code(403)
+        .send({
+            message: 'not logged in'
+        })  
+    }
 }
 
 function sessionDelete(user){

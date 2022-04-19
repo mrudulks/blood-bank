@@ -120,11 +120,11 @@ function getBlockPanchayathsFilter(filter) {
 
 // Blood Donors 
 
-function getDonerById(id) {
+function getDonerById(id,oid) {
   if (id != null && id != 'count') {
     return knex('donors').where('id', id)
   } else if (id == "count") {
-    return knex('donors').count('id');
+    return knex('donors').count('id').where('o_id',oid);
   } else {
     // return knex('donors').orderBy('name');
     return "Hii my boy"

@@ -46,23 +46,38 @@ import api from '~/lib/js/api';
     methods: {
       async dataFetch() {
         // const route = this.$router.
-        console.log("My Route",this.$route.name)
-        var item = await fetch('/api/user/new')
-        if (item.status == 403) {
-          this.$router.push({
-            name: 'login'
-          })
-        }
-        if (item.status == 500) {
-          this.$router.push({
-            name: 'login'
-          })
-        }
+      if(this.$route.name == 'login'){
+        return ;
+      }
 
-        if (item.status == 200) {
-          this.user = await item.json();
-          
+      const user = await api.getUser()
+      if(user.status == 200){
+       this.user = await user.json();
+      }
+       else if(user.status == 403) {
+          this.$router.push({
+            name: 'login'
+          })
         }
+      // this.user = 
+
+        // console.log("My Route",this.$route.name)
+        // var item = await fetch('/api/user/new')
+        // if (item.status == 403) {
+        //   this.$router.push({
+        //     name: 'login'
+        //   })
+        // }
+        // if (item.status == 500) {
+        //   this.$router.push({
+        //     name: 'login'
+        //   })
+        // }
+
+        // if (item.status == 200) {
+        //   this.user = await item.json();
+          
+        // }
       },
 
       open(){

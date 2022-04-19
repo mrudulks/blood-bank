@@ -9,7 +9,7 @@
               <img src="../lib/images/users.svg" alt="">
             </div>
             <div class="pl-3">
-              <h3 v-for="items in donorsCount" :key="items" class="m-0">{{items.count}}</h3>
+              <h3 v-for="items in donorsCount" :key="items.id" class="m-0">{{items.count}}</h3>
               <p>Blood Donors</p>
             </div>
 
@@ -139,9 +139,6 @@
         this.dataFetch()
       },
       async dataFetch() {
-        const data = await fetch('/api/')
-        this.items = data.json();
-
         const count = await fetch('/api/donors/count')
         this.donorsCount = await count.json();
 

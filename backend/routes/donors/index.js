@@ -58,7 +58,9 @@ module.exports = async function (fastify, opts,done){
             if(!validUser){
                 return 
             }
-        return await getDonerById('count')
+        const user = await userFetch(req.headers)
+        const oid = user[0].o_id
+        return await getDonerById('count',oid)
     })
 
     fastify.post('/register', async (req, reply) => {

@@ -17,6 +17,39 @@
           <button class="btn primary-btn  mb-3" type="submit">Login</button>
         </div>
       </form>
+
+      <div class="row">
+            <div class="col-md-12">
+             <h2 class="mb-3 mt-5 text-center"> Organizations</h2>
+          <div class="tablecard card mt-4">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <!-- <th scope="col">Actions</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ----- -->
+                <tr v-for="items in organizations" :key="items.name">
+                  <td>{{ items.name }}</td>
+
+                  <td>
+                    <div class="d-none">
+                      
+                      <div class="ml-2"><img style="height:1.2rem;width:1.2rem" src="../../../lib/images/trash.svg" alt=""
+                          @click="deleteUser(items.id)"></div>
+                    </div>
+
+                  </td>
+
+                </tr>
+    
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -27,7 +60,7 @@ import api from '~/lib/js/api';
   export default {
     data() {
       return {
-        organization:''
+        organizations:''
       }
     },
     methods: {
